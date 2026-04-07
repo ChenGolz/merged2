@@ -811,67 +811,109 @@ function setStatus(element, text, options = {}) {
 }
 
 
-const MODEL_SCRIPT_URLS = {
-  tf: 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
-  mobilenet: 'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
-  cocoSsd: 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js',
+const TFJS_CDN_BASE = 'https://cdn.jsdelivr.net/npm';
+const MODEL_ASSET_URLS = Object.freeze({
+  tf: `${TFJS_CDN_BASE}/@tensorflow/tfjs@4.22.0/dist/tf.min.js`,
+  tfWasm: `${TFJS_CDN_BASE}/@tensorflow/tfjs-backend-wasm@4.22.0/dist/tf-backend-wasm.min.js`,
+  tfWasmBase: `${TFJS_CDN_BASE}/@tensorflow/tfjs-backend-wasm@4.22.0/dist/`,
+  mobilenet: `${TFJS_CDN_BASE}/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js`,
+  coco: `${TFJS_CDN_BASE}/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js`,
+});
+
+function loadExternalScript(src) {
+  if (!src) return Promise.reject(new Error('missing src'));
+  const existing = document.querySelector(`script[src="${src}"]`);
+  if (existing?.dataset.loaded === 'true') return Promise.resolve(existing);
+  if (existing?.dataset.loading === 'true') {
+    return new Promise((resolve, reject) => {
+      existing.addEventListener('load', () => resolve(existing), { once: true });
+      existing.addEventListener('error', () => reject(new Error(`failed ${src}`)), { once: true });
+    });
+  }
+  return new Promise((resolve, reject) => {
+    const script = existing || document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.dataset.loading = 'true';
+    script.addEventListener('load', () => {
+      script.dataset.loading = 'false';
+      script.dataset.loaded = 'true';
+      resolve(script);
+    }, { once: true });
+    script.addEventListener('error', () => reject(new Error(`failed ${src}`)), { once: true });
+    if (!existing) document.head.appendChild(script);
+  });
+}
+
+async function ensureSearchModelAssets() {
+  if (typeof document === 'undefined') return false;
+  if (!window.tf) await loadExternalScript(MODEL_ASSET_URLS.tf);
+  if (!window.tf) throw new Error('ספריית TensorFlow.js לא נטענה.');
+  if (!window.tf.setBackend || !window.tf.ready) throw new Error('TensorFlow.js נטען חלקית.');
+  if (!window.tf.wasm) {
+    try {
+      await loadExternalScript(MODEL_ASSET_URLS.tfWasm);
+    } catch (error) {
+      // keep going with cpu/webgl
+    }
+  }
+  if (window.tf.wasm?.setWasmPaths) {
+    try {
+      window.tf.wasm.setWasmPaths(MODEL_ASSET_URLS.tfWasmBase, true);
+    } catch (error) {
+      // ignore and continue
+    }
+  }
+  if (!window.mobilenet) await loadExternalScript(MODEL_ASSET_URLS.mobilenet);
+  if (!window.cocoSsd) await loadExternalScript(MODEL_ASSET_URLS.coco);
+  return true;
+}
+
+async function ensureBestTfBackend() {
+  if (!window.tf?.ready) return 'cpu';
+  const candidates = [];
+  if (window.tf.wasm?.setWasmPaths) candidates.push('wasm');
+  if (window.tf.findBackend?.('webgl')) candidates.push('webgl');
+  candidates.push('cpu');
+  for (const backend of candidates) {
+    try {
+      await window.tf.setBackend(backend);
+      await window.tf.ready();
+      return backend;
+    } catch (error) {
+      // try next backend
+    }
+  }
+  return window.tf.getBackend?.() || 'cpu';
+}
+
+window.ensureSearchModelAssets = ensureSearchModelAssets;
+window.prewarmAnimalModels = async function prewarmAnimalModels() {
+  await ensureSearchModelAssets();
+  const results = await Promise.allSettled([loadModels(), loadAnimalDetector()]);
+  return results;
 };
 
-function loadExternalScriptOnce(src) {
-  if (!src) return Promise.reject(new Error('Missing script src'));
-  window.__petconnectScriptPromises = window.__petconnectScriptPromises || {};
-  if (window.__petconnectScriptPromises[src]) return window.__petconnectScriptPromises[src];
-  const existing = Array.from(document.scripts || []).find((script) => script.src === src);
-  window.__petconnectScriptPromises[src] = new Promise((resolve, reject) => {
-    const onReady = () => resolve(true);
-    const onError = () => reject(new Error(`Failed to load ${src}`));
-    if (existing) {
-      if (existing.dataset.loaded === 'true') return resolve(true);
-      existing.addEventListener('load', onReady, { once: true });
-      existing.addEventListener('error', onError, { once: true });
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = src;
-    script.defer = true;
-    script.crossOrigin = 'anonymous';
-    script.addEventListener('load', () => {
-      script.dataset.loaded = 'true';
-      resolve(true);
-    }, { once: true });
-    script.addEventListener('error', onError, { once: true });
-    document.head.appendChild(script);
-  });
-  return window.__petconnectScriptPromises[src];
-}
-
-async function ensureModelLibraries(statusEl) {
-  const needsTf = !window.tf;
-  const needsMobilenet = !window.mobilenet;
-  const needsCoco = !window.cocoSsd;
-  if (!needsTf && !needsMobilenet && !needsCoco) return;
-  setStatus(statusEl, 'טוען ספריות זיהוי…', { busy: true });
-  if (needsTf) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.tf);
-  if (needsMobilenet) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.mobilenet);
-  if (needsCoco) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.cocoSsd);
-}
-
 async function loadModels(statusEl) {
-  await ensureModelLibraries(statusEl);
+  await ensureSearchModelAssets();
+  const backend = await ensureBestTfBackend();
   if (!window.tf || !window.mobilenet) {
     throw new Error('ספריות TensorFlow.js או MobileNet לא נטענו. בדקי חיבור אינטרנט או חסימת CDN.');
   }
   if (window.__petconnectAnimalModel) {
-    setStatus(statusEl, 'מודל החיפוש של בעלי החיים מוכן.', { tone: 'success' });
-    return;
+    setStatus(statusEl, `מודל החיפוש של בעלי החיים מוכן${backend ? ` · ${backend.toUpperCase()}` : ''}.`, { tone: 'success' });
+    return window.__petconnectAnimalModel;
   }
   setStatus(statusEl, 'טוען את מודל החיפוש של בעלי החיים… בטעינה הראשונה זה עלול לקחת קצת זמן.', { busy: true });
   const model = await window.mobilenet.load({ version: 2, alpha: 1.0 });
   window.__petconnectAnimalModel = model;
-  setStatus(statusEl, 'מודל החיפוש של בעלי החיים מוכן.', { tone: 'success' });
+  setStatus(statusEl, `מודל החיפוש של בעלי החיים מוכן${backend ? ` · ${backend.toUpperCase()}` : ''}.`, { tone: 'success' });
+  return model;
 }
 async function loadAnimalDetector(statusEl) {
-  await ensureModelLibraries(statusEl);
+  await ensureSearchModelAssets();
+  await ensureBestTfBackend();
   if (!window.cocoSsd) {
     throw new Error('ספריית הזיהוי coco-ssd לא נטענה. בדקי חיבור אינטרנט או חסימת CDN.');
   }
@@ -1923,8 +1965,8 @@ function renderMatchCards(matches = [], options = {}) {
     const notes = safeNotes ? `<div class="small">${safeNotes}</div>` : '';
     const thumbSrc = normalized.thumb || normalized.imageData || normalized.image || '';
     const thumb = thumbSrc
-      ? `<div class="thumb-wrap blur-shell"><img class="pet-result-avatar blur-up is-loading" loading="lazy" decoding="async" onload="this.classList.remove('is-loading')" src="${thumbSrc}" alt="${safeLabel}"></div>`
-      : '<div class="thumb-wrap"><div class="small">אין תמונה</div></div>';
+      ? `<div class="thumb-wrap blur-shell"><img class="pet-result-avatar blur-up is-loading" loading="lazy" decoding="async" fetchpriority="low" onload="this.classList.remove('is-loading')" src="${thumbSrc}" alt="${safeLabel}"></div>`
+      : '<div class="thumb-wrap thumb-wrap-empty"><div class="pet-card-empty"><div class="pet-card-empty-emoji" aria-hidden="true">🐾</div><strong>עדיין אין תמונה</strong><div class="small">אפשר לזהות לפי העיר, הצבע והפרטים שבכרטיס.</div></div></div>';
     const score = kind === 'visual' ? Number(match.score || 0) : Number(match.colorScore || match.score || 0);
     const scoreText = score ? (kind === 'visual' ? `${Math.round(score * 100)}% התאמה` : `צבע ${Math.round(score * 100)}%`) : 'דיווח קהילתי';
     const reason = normalized.status === PET_STATUS.FOUND ? 'דיווח של חיה שנמצאה' : normalized.status === PET_STATUS.REUNITED ? 'סיפור הצלחה מהקהילה' : 'דיווח של חיה שאבדה';
@@ -1947,8 +1989,8 @@ function renderMatchCards(matches = [], options = {}) {
           <div class="small">${reason}</div>
           ${notes}
           <div class="card-actions">
-            <a class="button-link small primary-card-action" href="${escapeHtml(target)}">לפרטים ועזרה</a>
-            <a class="button-link small" href="${escapeHtml(share.href)}" target="_blank" rel="noopener">שתפו בווטסאפ</a>
+            <a class="button-link small primary-card-action" aria-label="לפרטים ועזרה על ${safeLabel}" href="${escapeHtml(target)}">לפרטים ועזרה</a>
+            <a class="button-link small" aria-label="שיתוף ${safeLabel} בוואטסאפ" href="${escapeHtml(share.href)}" target="_blank" rel="noopener">שתפו בווטסאפ</a>
           </div>
         </div>
       </article>`);

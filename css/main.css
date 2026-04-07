@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Assistant:wght@300;400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&family=Assistant:wght@400;700;800&display=swap");
 /*
   Single source of truth for site look-and-feel.
   KBWG remains the master visual system for both the core site and the pet-finder pages.
@@ -7,9 +7,22 @@
 @import url("../assets/css/home.css?v=2026-04-05-v4");
 @import url("../assets/css/petfinder-kbwg.css?v=2026-04-05-v4");
 
-:root{
+ :root{
+  --he-font: "Heebo", "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --kbwg-gold: #d4af37;
+  --kbwg-gold-deep: #b9931d;
   --kbwg-dark: #163a63;
+  --kbwg-text: #2c3e50;
+  --kbwg-muted: #637186;
+  --kbwg-olive: #617251;
+  --kbwg-brand: var(--brand);
+  --kbwg-brand-soft: var(--brand2);
+  --kbwg-surface: #ffffff;
+  --kbwg-line: rgba(44,62,80,.10);
+  --kbwg-shadow-soft: 0 10px 30px rgba(44,62,80,.06);
+  --kbwg-shadow-card: 0 18px 42px rgba(15,23,42,.10);
+  --kbwg-radius-xl: 28px;
+  --kbwg-radius-lg: 22px;
   --kbwg-font: var(--he-font);
   --site-primary: var(--brand);
   --site-primary-soft: rgba(42,91,154,.12);
@@ -21,17 +34,9 @@
 body{
   color: var(--site-text);
   font-family: var(--site-font);
+  font-synthesis-weight: none;
 }
 
-:root{
-  --kbwg-brand: var(--brand);
-  --kbwg-brand-soft: var(--brand2);
-  --kbwg-dark: #163a63;
-  --kbwg-surface: #ffffff;
-  --kbwg-font: var(--he-font);
-  --kbwg-shadow-soft: 0 10px 28px rgba(15,23,42,.06);
-  --kbwg-shadow-card: 0 18px 42px rgba(15,23,42,.10);
-}
 
 /* Shared hero treatment: reuse the KBWG hero shell on the pet-finder homepage */
 .petconnect-scope .bundleHero .heroCopy p,
@@ -233,18 +238,9 @@ body{
    White space, stronger typography, 3-color palette
    ========================= */
 :root{
-  --he-font: "Heebo", "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --kbwg-bg: #f9f9f9;
   --kbwg-bg-soft: #ffffff;
-  --kbwg-text: #2c3e50;
-  --kbwg-muted: #637186;
-  --kbwg-gold: #D4AF37;
-  --kbwg-gold-deep: #b9931d;
-  --kbwg-line: rgba(44,62,80,.10);
-  --kbwg-shadow-soft: 0 10px 30px rgba(44,62,80,.06);
   --kbwg-shadow-card: 0 14px 36px rgba(44,62,80,.08);
-  --kbwg-radius-xl: 28px;
-  --kbwg-radius-lg: 22px;
 }
 html, body{ background: var(--kbwg-bg); }
 body, input, button, textarea, select{ font-family: var(--he-font); }
@@ -519,9 +515,6 @@ body.page-bundles .pickCard{
 /* =========================
    KBWG funnel + affiliate bridge refresh
    ========================= */
-:root{
-  --kbwg-olive: #617251;
-}
 #siteHeader .nav > a.navCtaLink.active,
 #siteHeader .nav > a.navCtaLink[aria-current="page"]{
   background: linear-gradient(135deg, #d4af37, #aa8a1a);
@@ -754,7 +747,6 @@ body.page-bundles .pickCard{
 /* === Real full pass additions === */
 :root{
   --kbwg-olive: #61745d;
-  --kbwg-muted: #f5f3ee;
 }
 
 #siteHeader{backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);}
@@ -864,4 +856,127 @@ body.page-bundles .pickCard{
   .home-search-form{grid-template-columns:1fr;}
   .home-sticky-search-shell{top:72px;}
   .pet-detail-strip{grid-template-columns:1fr;}
+}
+
+
+/* ===== Performance, accessibility and mobile polish ===== */
+#siteHeader.siteHeader{
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.petconnect-scope .petfinder-master-hero .decorPhoto,
+.home-hero-clean .decorPhoto{
+  width: min(44vw, 480px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  contain: layout paint;
+}
+
+.quick-filter-chip{
+  min-height: 44px;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.petconnect-scope .animalCard,
+.latest-pet-card,
+.affiliate-bridge-card,
+.shop-guide-card,
+.quick-filter-chip,
+.btn,
+.button-link,
+#hero-found-now,
+#siteHeader .nav > a{
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease;
+}
+
+:where(a, button, input, select, textarea, summary, .quick-filter-chip):focus-visible{
+  outline: 3px solid rgba(22,58,99,.18);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(212,175,55,.18);
+}
+
+.pet-card-empty{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 16px;
+  text-align: center;
+  color: var(--kbwg-dark);
+  background: linear-gradient(180deg, #f8fafc, #eef2f7);
+}
+.pet-card-empty-emoji,
+.pet-placeholder-emoji{
+  font-size: 2rem;
+}
+.thumb-wrap-empty{
+  background: linear-gradient(180deg, #f8fafc, #eef2f7) !important;
+}
+.pet-detail-empty-media{
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 24px;
+  background: linear-gradient(180deg,#f8fafc,#eef2f7);
+  color: var(--kbwg-dark);
+}
+
+.result-grid > div,
+.result-grid > article{
+  animation: slideUp .4s ease-out forwards;
+}
+@keyframes slideUp{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.voice-wave{
+  display:none;
+  align-items:center;
+  gap:4px;
+  min-width:52px;
+  justify-content:center;
+}
+.voice-wave span{
+  width:4px;
+  height:12px;
+  border-radius:999px;
+  background: var(--kbwg-dark);
+  opacity:.7;
+}
+body.is-recording-audio .voice-wave,
+.voice-wave.active{
+  display:inline-flex;
+}
+body.is-recording-audio .voice-wave span,
+.voice-wave.active span{
+  animation: voiceWave 1s ease-in-out infinite;
+}
+body.is-recording-audio .voice-wave span:nth-child(2),
+.voice-wave.active span:nth-child(2){ animation-delay:.12s; }
+body.is-recording-audio .voice-wave span:nth-child(3),
+.voice-wave.active span:nth-child(3){ animation-delay:.24s; }
+body.is-recording-audio .voice-wave span:nth-child(4),
+.voice-wave.active span:nth-child(4){ animation-delay:.36s; }
+@keyframes voiceWave{
+  0%, 100%{ transform:scaleY(.55); opacity:.45; }
+  50%{ transform:scaleY(1.5); opacity:1; }
+}
+
+.fab-main[aria-expanded="true"]{
+  transform: rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
