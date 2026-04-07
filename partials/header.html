@@ -1,0 +1,130 @@
+<header class="siteHeader" id="siteHeader">
+  <div class="wrap headerRow">
+    <a aria-label="דף הבית" class="logo" href="index.html">
+      <img alt="KBWG" class="logoImg" height="40" src="assets/img/logo.png" width="40"/>
+      <span class="logoText">KBWG <span class="logoSub">PetConnect</span></span>
+    </a>
+
+    <div class="navMobileActions">
+      <div class="langSlot langSlotMobile" id="langSlotMobile" aria-label="בחירת שפה"></div>
+      <button class="navToggle" type="button" aria-label="פתח תפריט" aria-expanded="false">
+        <span class="navToggleIcon" aria-hidden="true">☰</span>
+        <span class="navToggleText">תפריט</span>
+      </button>
+    </div>
+
+    <nav aria-label="ניווט ראשי" class="nav">
+      <div class="navDrawerHeader">
+        <a class="navDrawerLogo" href="index.html" aria-label="דף הבית">
+          <img class="navDrawerLogoImg" src="assets/img/logo.png" width="36" height="36" alt=""/>
+          <span class="navDrawerLogoText">KBWG <small style="font-size:.82em;opacity:.7">PetConnect</small></span>
+        </a>
+        <button class="navDrawerClose" type="button" aria-label="סגור תפריט" title="סגור">×</button>
+      </div>
+
+      <a href="index.html">בית</a>
+      <a href="search.html">אבדות ומציאות</a>
+      <a class="navCtaLink" href="report-found.html">דיווח מהיר</a>
+      <a href="shop.html">חנות המלצות</a>
+      <a href="about.html">אודות</a>
+      <div class="langSlot langSlotDesktop" id="langSlotDesktop" aria-label="בחירת שפה"></div>
+    </nav>
+  </div>
+
+  <style>
+    #siteHeader.siteHeader{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      transition: box-shadow .2s ease, background .2s ease;
+    }
+    #siteHeader.siteHeader.isScrolled{
+      box-shadow: 0 10px 28px rgba(0,0,0,.12);
+      background: rgba(255,255,255,.96);
+    }
+    #siteHeader.siteHeader.isScrolled .logoImg{ height: 34px; width: 34px; }
+    #siteHeader.siteHeader.isScrolled .logoText{ font-size: .98rem; }
+    #siteHeader{
+      --nav-ink: #0b1f3a;
+      --nav-font: var(--he-font);
+    }
+    #siteHeader .logoText{ display:flex; align-items:baseline; gap:8px; }
+    #siteHeader .logoSub{ font-size:.82rem; color:#7a8597; font-weight:700; }
+    #siteHeader .nav a,
+    #siteHeader .navGroup > summary,
+    #siteHeader .navDrop a{
+      font-weight: var(--fw-semibold);
+      font-family: var(--nav-font);
+      color: var(--nav-ink);
+    }
+    #siteHeader .navToggle,
+    #siteHeader .navToggleIcon,
+    #siteHeader .navToggleText{
+      font-family: var(--nav-font);
+      color: var(--nav-ink);
+    }
+    #siteHeader .navToggle{ font-weight: var(--fw-semibold); letter-spacing: -0.1px; }
+    #siteHeader .navToggleText{ font-size: 0.98rem; line-height: 1; }
+    #siteHeader .navToggleIcon{ font-size: 1.2rem; line-height: 1; }
+    #siteHeader .navDrawerLogoText{
+      font-family: var(--nav-font);
+      color: var(--nav-ink);
+      font-weight: var(--fw-semibold);
+      font-size: 1.08rem;
+      letter-spacing: -0.15px;
+    }
+    #siteHeader .navDrawerClose{ color: var(--nav-ink); }
+    #siteHeader .nav > a{
+      text-decoration: none;
+      font-weight: var(--fw-semibold);
+      padding: 12px 10px;
+      border-radius: 14px;
+      font-size: clamp(1.02rem, 0.65vw + 0.9rem, 1.22rem);
+      line-height: 1.1;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #siteHeader .nav > a:hover{ background: rgba(157,195,230,.18); }
+    #siteHeader .nav > a.navCtaLink{
+      background: linear-gradient(135deg, #d4af37, #aa8a1a);
+      color:#fff;
+      box-shadow: 0 10px 24px rgba(212,175,55,.22);
+    }
+    #siteHeader .nav > a.navCtaLink:hover{ background: linear-gradient(135deg, #c9a42c, #98770d); }
+    #siteHeader .nav{ overflow: visible; }
+    #siteHeader .nav a,
+    #siteHeader .navGroup > summary{
+      font-weight: var(--fw-semibold);
+      min-height: 44px;
+      line-height: 1;
+    }
+    #siteHeader .navMobileActions{ display: inline-flex; gap: 10px; align-items: center; }
+    #siteHeader .quickSearch{
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      font-size: 1.15rem;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: 1px solid rgba(31,41,55,.12);
+      background: rgba(157,195,230,.18);
+      color: var(--nav-ink);
+      font-weight: var(--fw-bold);
+    }
+    #siteHeader .navGroup > summary{
+      list-style: none;
+      cursor: pointer;
+    }
+    @media (max-width: 980px){
+      #siteHeader .logoSub{ display:none; }
+    }
+  </style>
+</header>

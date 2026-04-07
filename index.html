@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>KBWG PetConnect | מחזירים אותם הביתה</title>
+<meta content="מחזירים אותם הביתה. דיווח מהיר, איתור חכם, שיתוף מיידי וקהילה תומכת שעוזרת למצוא את הדרך חזרה." name="description"/>
+<meta property="og:title" content="מחזירים אותם הביתה. ביחד."/>
+<meta property="og:description" content="מצאתם חיה? איבדתם חבר? העלו תמונה עכשיו, שתפו מהר וקבלו כלים מעשיים שיעזרו בדרך הביתה."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="assets/img/og-square-kbwg.jpg"/>
+<meta property="og:locale" content="he_IL"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="petconnect-assets/styles.scoped.css?v=2026-04-07-v1" rel="stylesheet"/>
+<link href="css/main.css?v=2026-04-07-realpass-1" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+<link href="manifest.webmanifest?v=2026-04-06-v3" rel="manifest"/>
+<meta content="#0d4f63" name="theme-color"/>
+</head>
+<body class="petconnect-kbwg-page">
+<div id="siteHeaderMount"></div>
+<div id="main">
+<div class="petconnect-scope"><main class="page unified-page minimalist-homepage home-help-first">
+
+<input accept="image/*" capture="environment" class="camera-direct-input" id="home-camera-input" type="file"/>
+<section class="hero product-hero heroSmall bundleHero petfinder-master-hero home-hero-clean">
+  <img loading="eager" decoding="async" class="decorPhoto decorCL" src="assets/img/photos/home-hero-pets.svg" alt="" aria-hidden="true" />
+  <div class="wrap heroInner">
+    <div class="heroCopy center-text">
+      <h1>מחזירים אותם הביתה. ביחד.</h1>
+      <p>טכנולוגיית זיהוי לפי תמונה, דיווח מהיר וקהילה תומכת שעוזרת להגיע במהירות לאנשים הנכונים בדרך חזרה הביתה.</p>
+      <div class="actions heroActions petfinder-hero-actions home-hero-actions">
+        <button class="btn btn-primary-solid hero-found-now" id="hero-found-now" type="button">מצאתי חיה</button>
+        <a class="btn btn-outline hero-secondary" href="./search.html?mode=lost">איבדתי חבר</a>
+      </div>
+      <div class="hero-stats" aria-label="השפעת הקהילה">
+        <span><strong id="stats-reunited">0</strong> חיות חזרו הביתה</span>
+        <span class="sep" aria-hidden="true">•</span>
+        <span><strong id="stats-reports">0</strong> דיווחים פעילים</span>
+      </div>
+      <div class="success-ticker-inline" id="hero-success-ticker" aria-live="polite">54 חברים חזרו הביתה השבוע</div>
+    </div>
+  </div>
+</section>
+
+<section class="home-sticky-search-shell" aria-label="חיפוש מהיר">
+  <div class="home-sticky-search card section-shell stack">
+    <div class="section-head compact">
+      <div class="section-kicker">חיפוש מהיר</div>
+      <h2 class="section-title" style="margin:0;">חפשו לפי צבע, עיר או גזע</h2>
+      <div class="section-subtitle">נסו למשל: כלב לבן בתל אביב, חתולה ג׳ינג׳ית בחולון, לברדור בראשון לציון.</div>
+    </div>
+    <form id="home-search-form" class="home-search-form" autocomplete="off">
+      <input id="home-search-query" type="search" placeholder="למשל: כלב לבן בתל אביב" aria-label="חיפוש חופשי"/>
+      <button class="btn btn-primary-solid" type="submit">חיפוש חכם</button>
+    </form>
+    <div class="quick-filter-row" id="home-quick-filters">
+      <button class="quick-filter-chip" data-type="כלב" type="button">🐶 כלב</button>
+      <button class="quick-filter-chip" data-type="חתול" type="button">🐱 חתול</button>
+      <button class="quick-filter-chip" data-type="אחר" type="button">🐾 אחר</button>
+      <button class="quick-filter-chip" data-nearby="true" type="button">📍 לידי</button>
+    </div>
+  </div>
+</section>
+
+<section class="impact-bar" aria-label="הוכחה חברתית">
+  <div class="wrap">
+    <p><strong id="impact-summary">הקהילה כאן כדי לעזור.</strong> כל דיווח שנפתח כאן מקבל מקום לשיתוף, פוסטר מוכן להדפסה וטיפים מעשיים לצעדים הבאים.</p>
+  </div>
+</section>
+
+<section class="card stack section-shell help-first-shell" style="margin-top:18px;">
+  <div class="section-head">
+    <div class="section-kicker">עזרה ראשונה לחיפוש</div>
+    <h2 class="section-title" style="margin:0;">מה כדאי לעשות כבר עכשיו?</h2>
+    <div class="section-subtitle">לפני הכול — נשמו עמוק, פעלו מהר ושמרו על סדר. הפעולות הקטנות האלו עושות הבדל גדול.</div>
+  </div>
+  <div class="help-tip-grid">
+    <article class="help-tip-card">
+      <strong>בדקו מקורות מים ואזורים שקטים</strong>
+      <p>כלבים וחתולים אבודים נמשכים לעיתים למקומות עם צל, מים או שקט יחסי. התחילו שם.</p>
+    </article>
+    <article class="help-tip-card">
+      <strong>שתפו פוסטר ברור בקבוצות השכונה</strong>
+      <p>תמונה אחת טובה, אזור אחרון שנראה בו וטלפון זמין יעלו משמעותית את הסיכוי לעזרה מהירה.</p>
+    </article>
+    <article class="help-tip-card help-tip-card-soft">
+      <strong>רכזו נקודת חיפוש מסודרת</strong>
+      <p>בחרו אדם אחד שמרכז את השיחות והעדכונים, ושמרו לעצמכם רשימה קצרה של מקומות שכבר נבדקו.</p>
+      <span class="text-link text-link-static">פחות בלגן, יותר סיכוי להגיע לקצה חוט</span>
+    </article>
+  </div>
+</section>
+
+<div id="map-container" class="map-placeholder hidden" aria-hidden="true"></div>
+
+<section class="card stack section-shell home-below-fold latest-pets-shell" style="margin-top:18px;">
+  <div class="space-between compact-home-header-row">
+    <div class="section-head">
+      <div class="section-kicker">דיווחים מהקהילה</div>
+      <h2 class="section-title" style="margin:0;">דיווחים אחרונים מהשטח</h2>
+      <div class="section-subtitle">ראיתם אחד מהם? לחצו לפרטים, שתפו במהירות ועזרו להגיע לאנשים הנכונים.</div>
+    </div>
+    <a class="button-link secondary small" href="./search.html">לכל הדיווחים</a>
+  </div>
+  <div class="latest-pets-grid" id="home-latest-pets-grid" aria-live="polite"></div>
+</section>
+
+<div class="fab-wrap">
+  <div class="fab-sheet hidden" id="home-fab-sheet">
+    <button class="emergency" id="fab-open-camera" type="button">מצאתי חיה עכשיו</button>
+    <a class="button-link lost" href="./search.html?mode=lost">איבדתי חיה</a>
+    <a class="button-link found" href="./report-found.html">דיווח חיה שנמצאה</a>
+  </div>
+  <button aria-label="פעולות מהירות" class="fab-main" id="home-fab-toggle" type="button">+</button>
+</div>
+
+<section class="card stack section-shell" style="margin-top:18px;">
+  <div class="section-head">
+    <div class="section-kicker">איך זה עובד?</div>
+    <h2 class="section-title" style="margin:0;">שלושה צעדים פשוטים בדרך הביתה</h2>
+    <div class="section-subtitle">כשהלב בלחץ, חשוב שהדרך תהיה ברורה וקלה.</div>
+  </div>
+  <div class="how-it-works-grid">
+    <article class="how-it-works-card">
+      <div class="stepIndex">1</div>
+      <strong>מצלמים ומעלים</strong>
+      <p class="small">מעלים תמונה ופרטים שיעזרו לנו לזהות את בעל החיים במהירות.</p>
+    </article>
+    <article class="how-it-works-card">
+      <div class="stepIndex">2</div>
+      <strong>הקהילה נרתמת</strong>
+      <p class="small">המודעה נחשפת לאנשים באזור שלכם, עם כלים לשיתוף ודיווח מהיר.</p>
+    </article>
+    <article class="how-it-works-card">
+      <div class="stepIndex">3</div>
+      <strong>מתאחדים</strong>
+      <p class="small">ברגע שיש קצה חוט, אפשר לפנות מיד ולקרב את רגע המפגש מחדש.</p>
+    </article>
+  </div>
+</section>
+
+<section aria-label="סיפורי הצלחה אחרונים" class="reunion-ticker-shell">
+  <div class="ticker-track" id="reunion-ticker-track"></div>
+</section>
+
+<div class="mobile-quick-bar" aria-label="פעולות מהירות במובייל">
+  <a class="mobile-quick-btn primary" href="./search.html?mode=lost">איבדתי חיה</a>
+  <a class="mobile-quick-btn secondary" href="./report-found.html">מצאתי חיה</a>
+</div>
+
+</main></div>
+</div>
+<div id="siteFooterMount"></div>
+<script defer src="assets/js/layout-inject.js?v=2026-04-07-v1"></script>
+<script defer src="assets/js/site.js?v=2026-04-07-v1"></script>
+<script defer src="petconnect-assets/global.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/init.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/i18n.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/common.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/app.js?v=20260407v1"></script>
+<script>
+window.addEventListener('DOMContentLoaded', async () => {
+  const STORAGE_KEY = 'petconnect-home-pending-capture-v1';
+  window.bootUiShell?.(document);
+  window.registerServiceWorker?.();
+
+  const warmSearchModels = () => {
+    const urls = [
+      'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
+      'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
+      'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js',
+    ];
+    const prefetch = () => urls.forEach((url) => fetch(url, { mode: 'cors', credentials: 'omit', cache: 'force-cache' }).catch(() => {}));
+    if ('requestIdleCallback' in window) window.requestIdleCallback(prefetch, { timeout: 1800 });
+    else setTimeout(prefetch, 900);
+  };
+  warmSearchModels();
+
+  const grid = document.getElementById('home-latest-pets-grid');
+  const ticker = document.getElementById('reunion-ticker-track');
+  const impactSummary = document.getElementById('impact-summary');
+  const statsReunited = document.getElementById('stats-reunited');
+  const statsReports = document.getElementById('stats-reports');
+  const heroTicker = document.getElementById('hero-success-ticker');
+
+  const esc = window.escapeHtml || ((value) => String(value ?? ''));
+  const formatDate = (value) => {
+    try {
+      return new Date(value).toLocaleDateString('he-IL', { day: 'numeric', month: 'numeric' });
+    } catch (error) {
+      return 'דיווח חדש';
+    }
+  };
+
+  const feed = await (window.loadPetFeed?.() || Promise.resolve([]));
+  const latest = (Array.isArray(feed) ? feed : []).filter((item) => item.status !== 'reunited').slice(0, 6);
+  const reunitedCount = (Array.isArray(feed) ? feed : []).filter((item) => item.status === 'reunited').length;
+  const activeCount = latest.length;
+  if (statsReunited) statsReunited.textContent = String(reunitedCount || 0);
+  if (statsReports) statsReports.textContent = String(activeCount || 0);
+  if (impactSummary) impactSummary.textContent = reunitedCount ? `יחד כבר עזרנו ל-${reunitedCount} חיות לחזור הביתה.` : 'הקהילה כאן כדי לעזור.';
+  if (heroTicker) heroTicker.textContent = reunitedCount ? `${reunitedCount} חברים חזרו הביתה השבוע` : 'כל דיווח חדש מגיע מהר לקהילה';
+
+  if (grid) {
+    grid.innerHTML = latest.map((report) => {
+      const title = esc(report.name || report.animalType || 'חיה');
+      const place = esc(report.city || report.locationText || 'האזור שלך');
+      const note = esc(report.notes || report.description || 'עדכון שנשמר בקהילה ומחכה לעיניים הנכונות.');
+      const image = report.imageData ? `<img src="${report.imageData}" alt="${title}" loading="lazy" decoding="async">` : `<div class="latest-pet-placeholder tone-warm"><span>🐾</span></div>`;
+      const href = window.buildPetDetailsHref?.(report) || './pet-details.html';
+      const statusLabel = report.status === 'found' ? 'נמצאה' : 'אבדה';
+      return `
+        <article class="latest-pet-card">
+          <a class="latest-pet-media" href="${href}">${image}</a>
+          <div class="latest-pet-body">
+            <div class="latest-pet-top"><strong>${title}</strong><span class="chip">${statusLabel}</span></div>
+            <p>${note}</p>
+            <div class="latest-pet-meta"><span>${place} · ${formatDate(report.reportedAt)}</span><a href="${href}" class="text-link">לפרטים ועזרה</a></div>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
+  if (ticker) {
+    const reunionItems = (Array.isArray(feed) ? feed : []).filter((item) => item.status === 'reunited').slice(0, 6);
+    const tickerItems = reunionItems.length ? reunionItems.map((item) => `${item.name || item.animalType || 'חיה'} חזר${item.sex === 'נקבה' ? 'ה' : ''} הביתה ב${item.city || 'האזור שלכם'}`) : [
+      'בלה חזרה הביתה בתל אביב',
+      'מקס אותר בחיפה',
+      'לונה חזרה למשפחה בירושלים',
+    ];
+    ticker.innerHTML = tickerItems.concat(tickerItems).map((item) => `<span class="ticker-item">${esc(item)}</span><span class="ticker-sep">•</span>`).join('');
+  }
+
+  const cameraInput = document.getElementById('home-camera-input');
+  const openCamera = () => cameraInput?.click();
+  document.getElementById('hero-found-now')?.addEventListener('click', openCamera);
+  document.getElementById('fab-open-camera')?.addEventListener('click', openCamera);
+  cameraInput?.addEventListener('change', () => {
+    const file = cameraInput.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try { sessionStorage.setItem(STORAGE_KEY, String(reader.result || '')); } catch (error) {}
+      window.location.href = './search.html?mode=found';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  const searchForm = document.getElementById('home-search-form');
+  const searchInput = document.getElementById('home-search-query');
+  const submitSearch = (extra = {}) => {
+    const params = new URLSearchParams();
+    const q = String(searchInput?.value || '').trim();
+    if (q) params.set('q', q);
+    if (extra.type) params.set('type', extra.type);
+    if (extra.nearby) params.set('near', 'לידי');
+    window.location.href = `./search.html?${params.toString()}`;
+  };
+  searchForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    submitSearch();
+  });
+  document.querySelectorAll('[data-type]').forEach((button) => {
+    button.addEventListener('click', () => submitSearch({ type: button.dataset.type || '' }));
+  });
+  document.querySelector('[data-nearby="true"]')?.addEventListener('click', () => submitSearch({ nearby: true }));
+
+  const fabToggle = document.getElementById('home-fab-toggle');
+  const fabSheet = document.getElementById('home-fab-sheet');
+  fabToggle?.addEventListener('click', () => fabSheet?.classList.toggle('hidden'));
+});
+</script>
+</body>
+</html>

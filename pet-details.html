@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>KBWG | פרטי מודעה</title>
+<meta name="description" content="עמוד פרטי מודעה עם תמונה, סטטוס, מיקום אחרון, כפתורי שיתוף וכלי עזר למי שרוצה לעזור."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/main.css?v=2026-04-07-realpass-1"/>
+<link rel="icon" type="image/png" href="assets/img/logo.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="he_IL"/>
+</head>
+<body class="petconnect-kbwg-page">
+<div id="siteHeaderMount"></div>
+<div id="main">
+<div class="petconnect-scope"><main class="page unified-page">
+  <section class="card stack section-shell pet-detail-shell" id="pet-detail-shell">
+    <div class="pet-detail-loading pet-card-skeleton"></div>
+  </section>
+</main></div>
+</div>
+<div id="siteFooterMount"></div>
+<script defer src="assets/js/layout-inject.js?v=2026-04-07-v1"></script>
+<script defer src="assets/js/site.js?v=2026-04-07-v1"></script>
+<script defer src="petconnect-assets/common.js?v=20260407v1"></script>
+<script>
+window.addEventListener('DOMContentLoaded', async () => {
+  window.bootUiShell?.(document);
+  const shell = document.getElementById('pet-detail-shell');
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id') || '';
+  const record = await (window.findPetById?.(id) || Promise.resolve(null));
+  const esc = window.escapeHtml || ((value) => String(value ?? ''));
+  const formatDate = (value) => {
+    try {
+      return new Date(value).toLocaleString('he-IL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch (error) { return 'לא צוין'; }
+  };
+  const statusLabel = (status) => ({ lost: 'אבד', found: 'נמצא', reunited: 'חזר הביתה' }[status] || 'דיווח');
+  if (!record) {
+    shell.innerHTML = `<div class="empty empty-state">לא מצאנו את המודעה שביקשתם. אפשר לחזור ל<a class="text-link" href="search.html">חיפוש</a> או לדף הבית.</div>`;
+    return;
+  }
+  const detailUrl = new URL(window.buildPetDetailsHref?.(record) || window.location.href, window.location.href).href;
+  const share = window.buildWhatsAppShare?.(record, { url: detailUrl }) || { href: '#', text: '' };
+  document.title = `KBWG | ${record.name || record.animalType || 'פרטי מודעה'}`;
+  const image = record.imageData ? `<img src="${record.imageData}" alt="${esc(record.name || record.animalType || 'חיה')}" loading="eager" decoding="async">` : '<div class="pet-detail-empty-media">אין תמונה זמינה</div>';
+  shell.innerHTML = `
+    <section class="pet-detail-hero">
+      <div class="pet-detail-media">${image}</div>
+      <div class="pet-detail-main">
+        <span class="pet-status-badge status-${esc(record.status || 'lost')}">${statusLabel(record.status)}</span>
+        <h1>${esc(record.name || record.animalType || 'חיה')}</h1>
+        <p class="pet-detail-lead">${esc(record.description || record.notes || 'כל פרט קטן יכול לעזור. אם ראיתם את החיה, שלחו מיקום מדויק וצרו קשר מיד.')}</p>
+        <div class="pet-detail-meta-line">${esc(record.city || 'האזור שלכם')} · ${esc(formatDate(record.reportedAt || record.createdAt))}</div>
+        <div class="pet-detail-actions">
+          <a class="btn btn-primary-solid" href="${esc(share.href)}" target="_blank" rel="noopener">שתפו בווטסאפ</a>
+          <a class="btn btn-outline" href="tel:${esc(record.contactPhone || '')}">התקשרו עכשיו</a>
+          <button class="btn btn-outline" id="detail-poster-btn" type="button">הורדת פוסטר</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="pet-detail-strip">
+      <div class="detail-mini-card"><span>סוג</span><strong>${esc(record.animalType || 'לא צוין')}</strong></div>
+      <div class="detail-mini-card"><span>גודל</span><strong>${esc(record.sizeLabel || 'לא צוין')}</strong></div>
+      <div class="detail-mini-card"><span>צבע</span><strong>${esc(record.colors || 'לא צוין')}</strong></div>
+      <div class="detail-mini-card"><span>אזור</span><strong>${esc(record.city || 'לא צוין')}</strong></div>
+    </section>
+
+    <section class="pet-detail-grid">
+      <article class="card stack section-shell section-shell--sub">
+        <div class="section-head"><div class="section-kicker">איך לזהות אותו?</div><h2 class="section-title" style="margin:0;">סימנים שכדאי לחפש</h2></div>
+        <ul class="pet-detail-list">
+          <li>${esc(record.breed || 'גזע לא צוין')}</li>
+          <li>${esc(record.colors || 'צבעים לא צוינו')}</li>
+          <li>${esc(record.notes || 'אין הערות נוספות כרגע')}</li>
+        </ul>
+      </article>
+
+      <article class="card stack section-shell section-shell--sub">
+        <div class="section-head"><div class="section-kicker">איפה נראה לאחרונה</div><h2 class="section-title" style="margin:0;">אזור הדיווח</h2></div>
+        <div class="pet-map-placeholder">
+          <strong>${esc(record.city || 'לא צוין')}</strong>
+          <div>${esc(record.locationText || record.exactAddress || 'אין פירוט נוסף כרגע')}</div>
+          <div class="small">מפת חיפוש חיה תתחבר כאן בהמשך.</div>
+        </div>
+      </article>
+
+      <article class="card stack section-shell section-shell--sub">
+        <div class="section-head"><div class="section-kicker">ראיתם אותו?</div><h2 class="section-title" style="margin:0;">כך תוכלו לעזור</h2></div>
+        <ol class="pet-detail-list ordered">
+          <li>לא לרדוף אחרי החיה ולא להבהיל אותה.</li>
+          <li>לצלם מרחוק אם אפשר.</li>
+          <li>לשלוח מיקום מדויק וזמן.</li>
+          <li>ליצור קשר מיידי דרך הכפתורים למעלה.</li>
+        </ol>
+      </article>
+
+      <article class="card stack section-shell section-shell--sub">
+        <div class="section-head"><div class="section-kicker">יש לכם מידע?</div><h2 class="section-title" style="margin:0;">כפתורי פעולה מהירים</h2></div>
+        <div class="pet-detail-contact-box">
+          <a class="button-link small primary-card-action" href="${esc(share.href)}" target="_blank" rel="noopener">שליחה לקבוצת ווטסאפ</a>
+          <a class="button-link small" href="tel:${esc(record.contactPhone || '')}">טלפון ליצירת קשר</a>
+          <button class="button-link small" id="detail-copy-btn" type="button">העתקת קישור</button>
+        </div>
+      </article>
+    </section>
+  `;
+
+  document.getElementById('detail-copy-btn')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(detailUrl);
+      document.getElementById('detail-copy-btn').textContent = 'הקישור הועתק';
+    } catch (error) {}
+  });
+
+  document.getElementById('detail-poster-btn')?.addEventListener('click', async () => {
+    if (window.openPrintablePoster) {
+      await window.openPrintablePoster({
+        title: record.name || record.animalType || 'פוסטר איתור חיה',
+        details: [record.city, record.locationText, record.notes].filter(Boolean).join(' • '),
+        dataUrl: record.imageData || '',
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>

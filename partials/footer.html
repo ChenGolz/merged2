@@ -1,0 +1,108 @@
+<footer class="siteFooter">
+  <div class="wrap">
+    <div aria-label="ציטוטים" class="footerQuotes">
+      <span class="quotePill">מחזירים אותם הביתה</span>
+      <span class="quotePill">דיווח מהיר ושיתוף בקהילה</span>
+      <span class="quotePill">שיתוף מהיר עם הקהילה</span>
+      <span class="quotePill">נתמך באהבה על ידי קהילת KBWG</span>
+    </div>
+
+    <div class="footerGrid" aria-label="קישורים בתחתית האתר">
+      <div class="footerCol">
+        <h3 class="footerTitle">ניווט מהיר</h3>
+        <a href="index.html">בית</a>
+        <a href="search.html">אבדות ומציאות</a>
+        <a href="report-found.html">דיווח מהיר</a>
+        <a href="shop.html">חנות המלצות</a>
+      </div>
+
+      <div class="footerCol">
+        <h3 class="footerTitle">מידע וקישורים</h3>
+        <a href="shop.html">חנות המלצות</a>
+        <a href="guides.html">מדריכים וטיפים</a>
+        <a href="about.html">מי אנחנו</a>
+        <a href="contact.html">צרו קשר</a>
+      </div>
+
+      <div class="footerCol">
+        <h3 class="footerTitle">מידע נוסף</h3>
+        <a href="about.html">אודות</a>
+        <a href="methodology.html">איך זה עובד</a>
+        <a href="contact.html">דברו איתנו</a>
+        <a href="terms.html">תקנון ותנאי שימוש</a>
+      </div>
+    </div>
+
+    <div class="footerBottom">
+      <p class="muted footerNote">
+        <strong>KBWG</strong><br/>
+        מקום אחד לאיתור בעלי חיים, דיווח מהיר, שיתוף קהילתי וכלים שעוזרים לפעול מהר כשזה באמת חשוב.
+      </p>
+
+      <p class="muted footerLegal">נתמך באהבה על ידי קהילת KBWG. חלק מהקישורים באתר מפנים להמלצות חיצוניות שנועדו לעזור בזמן אמת. © 2026 KBWG. כל הזכויות שמורות.</p>
+    </div>
+  </div>
+
+  <style>
+    .footerGrid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+    }
+    .footerTitle{
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      font-weight: 1000;
+      color: rgba(15,23,42,.88);
+    }
+    .footerCol a{
+      display: block;
+      text-decoration: none;
+      padding: 6px 0;
+      font-weight: 800;
+      color: rgba(15,23,42,.78);
+    }
+    .footerCol a:hover{ color: rgba(42,91,154,.98); }
+    .footerBottom{ margin-top: 14px; }
+    .footerNote{ margin-top: 10px; }
+    .footerLegal{ margin-top: 10px; opacity: .9; }
+    @media (max-width: 820px){
+      .footerGrid{ grid-template-columns: 1fr; }
+      .footerCol a{ padding: 4px 0; }
+    }
+  </style>
+</footer>
+
+<nav class="bottomBar" aria-label="ניווט מהיר">
+    <a href="index.html" class="bottomBarItem">
+      <span class="bottomBarIcon">🏠</span>
+      <span class="bottomBarLabel">בית</span>
+    </a>
+    <a href="search.html" class="bottomBarItem">
+      <span class="bottomBarIcon">🔎</span>
+      <span class="bottomBarLabel">אבדות</span>
+    </a>
+    <a href="report-found.html" class="bottomBarItem bottomBarItem--cta">
+      <span class="bottomBarIcon">📢</span>
+      <span class="bottomBarLabel">דיווח</span>
+    </a>
+    <a href="shop.html" class="bottomBarItem">
+      <span class="bottomBarIcon">💡</span>
+      <span class="bottomBarLabel">המלצות</span>
+    </a>
+  </nav>
+
+  <style>
+    .bottomBar{position:fixed;left:0;right:0;bottom:0;display:none;gap:4px;justify-content:space-between;align-items:stretch;padding:8px 10px;border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);z-index:1000}
+    .bottomBarItem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:12px;padding:8px 6px;text-decoration:none}
+    .bottomBarIcon{font-size:18px;line-height:1}
+    .bottomBarLabel{font-size:12px;line-height:1.1;font-weight:600}
+    .bottomBarItem--cta{background:rgba(0,0,0,.06)}
+    @media (max-width: 900px){
+      .bottomBar{display:flex}
+      body{padding-bottom:76px}
+    }
+  </style>

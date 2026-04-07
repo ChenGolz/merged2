@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>KBWG | דיווח מהיר</title>
+<meta content="KBWG | דיווח מהיר על בעל חיים שאבד או נמצא, עם שיתוף קל ופנייה מהירה לקהילה." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&amp;family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="petconnect-assets/styles.scoped.css?v=2026-04-05-v1" rel="stylesheet"/>
+<link href="css/main.css?v=2026-04-06-v9" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+<link href="manifest.webmanifest?v=2026-04-06-v3" rel="manifest"/>
+<meta content="#0d4f63" name="theme-color"/>
+</head>
+<body class="petconnect-kbwg-page">
+<div id="siteHeaderMount"></div>
+<div id="main">
+<div class="petconnect-scope"><main class="page unified-page">
+
+<section class="card hero-slab stack section-shell hero-shell petfinder-lead-card">
+<div class="chip" id="report-hero-chip">דיווח מהיר</div>
+<h1 id="report-hero-title" style="margin:0;">איבדתם חבר? אנחנו כאן לעזור</h1>
+<p class="meta" id="report-hero-meta">אם הגעתם לכאן מתוך החיפוש, התמונה והמיקום כבר מחכים לכם כאן. נשאר רק להשלים כמה פרטים ולפרסם את המודעה לקהילה החמה סביבכם.</p>
+<div class="step-progress">
+<div class="step-pill active" id="report-step-1">1/3 תמונה</div>
+<div class="step-pill" id="report-step-2">2/3 מיקום</div>
+<div class="step-pill" id="report-step-3">3/3 יצירת קשר</div>
+</div>
+<div class="hero-mini-steps"><span class="badge">1 תמונה</span><span class="badge">2 מיקום</span><span class="badge">3 טלפון / וואטסאפ</span></div>
+<div class="notice" id="report-status">טוען טיוטת דיווח…</div>
+</section>
+<section class="grid grid-2 section-grid" style="margin-top:16px;">
+<article class="card stack section-shell">
+<div class="section-head"><div class="section-kicker">שלב 1</div><h2 class="section-title">התמונה שתעזור לקהילה לזהות</h2><div class="section-subtitle">התמונה שבחרת תלווה את כל תהליך הדיווח.</div></div>
+<img alt="תמונת הדיווח" class="report-preview hidden" id="report-image"/>
+<div class="empty empty-state" id="report-image-empty">עדיין לא נטענה תמונה. אפשר לחזור לחיפוש או לבחור תמונה ידנית למטה.</div>
+<input accept="image/*" capture="environment" id="report-image-file" type="file"/>
+<div class="tip-bubble small"><strong>טיפ לצילום:</strong> אם אפשר, צלמי את החיה מלפנים או מהצד, באור טבעי, והשתדלי שלא לחתוך אוזניים/זנב.</div>
+<div class="row wrap compact-row">
+<button class="secondary small" id="back-to-search-btn" type="button">חזרה לחיפוש</button>
+<button class="secondary small" id="clear-draft-btn" type="button">ניקוי הטיוטה</button>
+</div>
+</article>
+<article class="card stack section-shell">
+<div class="section-head"><div class="section-kicker">שלב 2-3</div><h2 class="section-title">מיקום ופרטי קשר</h2><div class="section-subtitle">ספרו לנו רק מה שבאמת חשוב כדי שאנשים יוכלו לזהות, לשתף ולעזור במהירות.</div></div>
+<div class="field-grid">
+<input aria-label="סוג חיה" id="report-animal-type" placeholder="סוג חיה, למשל כלב" type="text"/>
+<input aria-label="גזע משוער" id="report-breed" placeholder="גזע משוער" type="text"/>
+</div>
+<div class="suggestion-chips" id="report-breed-chips"></div>
+<div class="field-grid">
+<input aria-label="צבע" id="report-color" placeholder="צבע מרכזי" type="text"/>
+<input aria-label="גודל" id="report-size" placeholder="גודל משוער" type="text"/>
+</div>
+<div class="field-grid">
+<input aria-label="עיר" id="report-city" placeholder="עיר" type="text"/>
+<input aria-label="אזור/כתובת" id="report-location" placeholder="איפה ראיתם אותו לאחרונה?" type="text"/>
+</div>
+<div class="field-grid">
+<input aria-label="זמן דיווח" class="readonly-input" id="report-time" readonly="" type="text"/>
+<label class="small checkbox-inline"><input checked="" id="quick-post-toggle" type="checkbox"/> דיווח מהיר: לשאול רק על פרטים נוספים</label>
+</div>
+<div class="field-grid">
+<input aria-label="טלפון ליצירת קשר" id="report-phone" inputmode="tel" placeholder="טלפון ליצירת קשר" type="tel"/>
+<label class="small checkbox-inline"><input checked="" id="report-whatsapp-optin" type="checkbox"/> אפשר לפנות גם בוואטסאפ</label>
+</div>
+<textarea id="report-extra-details" placeholder="ספרו לנו משהו שיעזור לנו לזהות אותו (סימן מיוחד, קולר, התנהגות...)" rows="4"></textarea>
+<div class="card stack section-shell" style="padding:14px;">
+<div class="space-between"><strong>תיאור קולי מהיר</strong></div>
+<div class="small">אפשר להקליט עד כ-10 שניות במקום להקליד תוך כדי תנועה.</div>
+<div class="voice-tools">
+<button class="secondary small" id="voice-start-btn" type="button">התחלת הקלטה</button>
+<button class="secondary small" disabled="" id="voice-stop-btn" type="button">עצירת הקלטה</button>
+<button class="secondary small" disabled="" id="voice-clear-btn" type="button">מחיקת הקלטה</button>
+<span class="voice-status" id="voice-status">עדיין אין הקלטה.</span>
+</div>
+<audio class="hidden" controls="" id="voice-audio"></audio>
+</div>
+<div class="row wrap compact-row">
+<button id="submit-report-btn" type="button">פרסמו את המודעה עכשיו</button>
+<button class="secondary" disabled="" id="share-report-btn" type="button">רוצה לעזור? שתפו</button>
+<button class="secondary" disabled="" id="whatsapp-report-btn" type="button">פוסט לוואטסאפ</button>
+<button class="secondary poster-btn" disabled="" id="poster-report-btn" type="button">יצירת פוסטר</button>
+</div>
+</article>
+</section>
+<section class="card stack section-shell success-shell hidden" id="report-success" style="margin-top:16px;"></section>
+
+<section class="card stack section-shell section-shell--minimal" style="margin-top:16px;">
+<details class="soft-disclosure">
+<summary>הדיווחים האחרונים שלך</summary>
+<div class="soft-disclosure-body stack" style="margin-top:12px;">
+<div class="small">כאן אפשר לחזור במהירות לדיווחים האחרונים שפרסמת.</div>
+<div class="result-grid" id="local-found-reports"></div>
+</div>
+</details>
+</section>
+</main></div>
+</div>
+<div id="siteFooterMount"></div>
+<script defer src="assets/js/layout-inject.js?v=2026-04-06-v3"></script>
+<script defer src="assets/js/site.js?v=2026-04-06-v3"></script>
+<script defer src="petconnect-assets/global.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/init.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/i18n.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/common.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/app.js?v=20260403v48"></script>
+<script defer src="report-found.inline.js?v=20260403v48"></script><script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('fromSearch') === 'true') {
+          const savedImage = sessionStorage.getItem('pendingFoundImage') || sessionStorage.getItem('pendingImage') || '';
+          if (savedImage) {
+            window.currentReportImage = savedImage;
+            const previewImg = document.getElementById('report-image');
+            const emptyState = document.getElementById('report-image-empty');
+            if (previewImg) {
+              previewImg.src = savedImage;
+              previewImg.classList.remove('hidden');
+            }
+            emptyState?.classList.add('hidden');
+          }
+        }
+      });
+    </script>
+</body>
+</html>

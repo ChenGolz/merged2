@@ -1,0 +1,867 @@
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Assistant:wght@300;400;600;700;800&display=swap");
+/*
+  Single source of truth for site look-and-feel.
+  KBWG remains the master visual system for both the core site and the pet-finder pages.
+*/
+@import url("../assets/css/styles.css?v=2026-04-05-v4");
+@import url("../assets/css/home.css?v=2026-04-05-v4");
+@import url("../assets/css/petfinder-kbwg.css?v=2026-04-05-v4");
+
+:root{
+  --kbwg-gold: #d4af37;
+  --kbwg-dark: #163a63;
+  --kbwg-font: var(--he-font);
+  --site-primary: var(--brand);
+  --site-primary-soft: rgba(42,91,154,.12);
+  --site-surface: var(--paper);
+  --site-text: var(--ink);
+  --site-font: var(--he-font);
+}
+
+body{
+  color: var(--site-text);
+  font-family: var(--site-font);
+}
+
+:root{
+  --kbwg-brand: var(--brand);
+  --kbwg-brand-soft: var(--brand2);
+  --kbwg-dark: #163a63;
+  --kbwg-surface: #ffffff;
+  --kbwg-font: var(--he-font);
+  --kbwg-shadow-soft: 0 10px 28px rgba(15,23,42,.06);
+  --kbwg-shadow-card: 0 18px 42px rgba(15,23,42,.10);
+}
+
+/* Shared hero treatment: reuse the KBWG hero shell on the pet-finder homepage */
+.petconnect-scope .bundleHero .heroCopy p,
+.petconnect-scope .petfinder-master-hero .heroCopy p{
+  max-width: 62ch;
+  margin: .6rem auto 0;
+}
+.petconnect-scope .petfinder-master-hero{
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(157,195,230,.32), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,247,251,.96));
+}
+.petconnect-scope .petfinder-master-hero .heroInner{
+  position: relative;
+  z-index: 1;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy{
+  max-width: 68ch;
+}
+.petconnect-scope .petfinder-master-hero h1{
+  font-size: clamp(2rem, 1.8rem + 1.2vw, 3.2rem);
+  letter-spacing: -.02em;
+}
+.petconnect-scope .petfinder-master-hero .decorPhoto{
+  opacity: .18;
+  filter: saturate(.9);
+}
+.petconnect-scope .petfinder-master-hero .badgeRow{
+  justify-content: center;
+}
+.petconnect-scope .petfinder-master-hero .heroActions{
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.petconnect-scope .petfinder-master-hero .btn.primary{
+  background: linear-gradient(135deg, var(--kbwg-brand), var(--kbwg-dark));
+}
+.petconnect-scope .petfinder-master-hero .btn.ghost{
+  background: rgba(255,255,255,.94);
+  color: var(--site-text);
+  border: 1px solid rgba(32,58,99,.12);
+  box-shadow: var(--kbwg-shadow-soft);
+}
+.petconnect-scope .petfinder-kbwg-note{
+  margin-top: .9rem;
+  font-weight: 700;
+}
+
+/* Search results: borrow the KBWG bundle card feel for animal entries */
+.petconnect-scope .result-grid{
+  gap: 14px;
+}
+.petconnect-scope .animalCard{
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 12px;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,247,251,.96)) !important;
+  border: 1px solid rgba(32,58,99,.08) !important;
+  box-shadow: var(--kbwg-shadow-card) !important;
+}
+.petconnect-scope .animalCard:hover{
+  transform: translateY(-2px);
+  border-color: rgba(32,58,99,.16) !important;
+}
+.petconnect-scope .animalCard .thumb-wrap{
+  width: 116px;
+  min-width: 116px;
+  background: rgba(15,23,42,.03);
+  border-radius: 16px;
+  box-shadow: none;
+}
+.petconnect-scope .animalCard .thumb-wrap img{
+  width: 100%;
+  height: 100%;
+  border-radius: 16px !important;
+  border: 1px solid rgba(32,58,99,.12);
+  box-shadow: none;
+}
+.petconnect-scope .animalCard .body{
+  display: grid;
+  gap: 10px;
+  padding: 2px 0 0;
+}
+.petconnect-scope .animalCard .body > .space-between{
+  align-items: flex-start;
+}
+.petconnect-scope .animalCard strong{
+  font-size: 1.02rem;
+  color: var(--kbwg-dark);
+}
+.petconnect-scope .animalCard .badge{
+  background: rgba(32,58,99,.06);
+  border: 1px solid rgba(32,58,99,.10);
+  color: rgba(15,23,42,.82);
+}
+.petconnect-scope .animalCard .score-pill,
+.petconnect-scope .animalCard .score{
+  background: rgba(32,58,99,.08);
+  color: var(--kbwg-dark);
+}
+.petconnect-scope .animalCard .card-actions{
+  margin-top: 4px;
+}
+.petconnect-scope .animalCard .card-actions .button-link,
+.petconnect-scope .animalCard .card-actions button{
+  min-height: 40px;
+  border-radius: 999px;
+}
+.petconnect-scope .summary-hero{
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,247,251,.96));
+  border: 1px solid rgba(32,58,99,.08);
+}
+
+@media (max-width: 760px){
+  .petconnect-scope .petfinder-master-hero h1{
+    font-size: clamp(1.8rem, 1.5rem + 1.8vw, 2.5rem);
+  }
+  .petconnect-scope .animalCard{
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .petconnect-scope .animalCard .thumb-wrap{
+    width: 88px;
+    min-width: 88px;
+  }
+}
+
+
+/* Unified navigation active state */
+#siteHeader .nav > a.active,
+#siteHeader .nav > a[aria-current="page"],
+.bottomBar .bottomBarItem.active,
+.bottomBar .bottomBarItem[aria-current="page"]{
+  background: rgba(32,58,99,.10);
+  border-color: rgba(32,58,99,.12);
+  color: var(--kbwg-dark);
+  box-shadow: inset 0 0 0 1px rgba(32,58,99,.08);
+}
+#siteHeader .nav > a.active{ font-weight: 800; }
+.bottomBar .bottomBarItem.active .bottomBarLabel,
+.bottomBar .bottomBarItem[aria-current="page"] .bottomBarLabel{ color: var(--kbwg-dark); font-weight: 800; }
+
+.petconnect-scope .petfinder-master-hero .heroCopy p{
+  font-size: 1.05rem;
+}
+.petconnect-scope .petfinder-home-panel .sectionTitle,
+.petconnect-scope .section-title,
+.petconnect-scope .sectionTitle{
+  color: var(--kbwg-dark);
+}
+.petconnect-scope .how-it-works-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.petconnect-scope .how-it-works-card{
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,247,251,.96));
+  border: 1px solid rgba(32,58,99,.08);
+  box-shadow: var(--kbwg-shadow-card);
+}
+.petconnect-scope .how-it-works-card .stepIndex{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  background: rgba(32,58,99,.10);
+  color: var(--kbwg-dark);
+  font-weight: 800;
+}
+.petconnect-scope .reunion-ticker-shell{
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(32,58,99,.08);
+  border-radius: 18px;
+  box-shadow: var(--kbwg-shadow-soft);
+}
+.petconnect-scope .ticker-item{
+  color: #18324f;
+  background: rgba(157,195,230,.22);
+  border: 1px solid rgba(32,58,99,.10);
+}
+@media (max-width: 760px){
+  .petconnect-scope .how-it-works-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* =========================
+   Premium KBWG x PetConnect refresh
+   White space, stronger typography, 3-color palette
+   ========================= */
+:root{
+  --he-font: "Heebo", "Assistant", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --kbwg-bg: #f9f9f9;
+  --kbwg-bg-soft: #ffffff;
+  --kbwg-text: #2c3e50;
+  --kbwg-muted: #637186;
+  --kbwg-gold: #D4AF37;
+  --kbwg-gold-deep: #b9931d;
+  --kbwg-line: rgba(44,62,80,.10);
+  --kbwg-shadow-soft: 0 10px 30px rgba(44,62,80,.06);
+  --kbwg-shadow-card: 0 14px 36px rgba(44,62,80,.08);
+  --kbwg-radius-xl: 28px;
+  --kbwg-radius-lg: 22px;
+}
+html, body{ background: var(--kbwg-bg); }
+body, input, button, textarea, select{ font-family: var(--he-font); }
+body.petconnect-kbwg-page{
+  background:
+    radial-gradient(circle at top left, rgba(212,175,55,.10), transparent 28%),
+    radial-gradient(circle at top right, rgba(42,91,154,.08), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f9f9f9 42%, #f7f8fa 100%);
+  color: var(--kbwg-text);
+}
+body.petconnect-kbwg-page #main{ padding-top: 8px; }
+
+#siteHeader.siteHeader{
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid rgba(44,62,80,.08);
+}
+#siteHeader.siteHeader.isScrolled{
+  background: rgba(255,255,255,.98);
+  box-shadow: 0 12px 34px rgba(44,62,80,.08);
+}
+#siteHeader .logoText,
+#siteHeader .nav a,
+#siteHeader .navGroup > summary,
+#siteHeader .navDrop a,
+.bottomBarLabel{
+  font-family: var(--he-font) !important;
+}
+#siteHeader .nav > a:hover,
+#siteHeader .nav > a.active,
+#siteHeader .nav > a[aria-current="page"],
+.bottomBar .bottomBarItem.active,
+.bottomBar .bottomBarItem[aria-current="page"]{
+  background: rgba(212,175,55,.12) !important;
+  border-color: rgba(212,175,55,.18) !important;
+  color: var(--kbwg-text) !important;
+}
+
+.petconnect-scope{
+  --panel: rgba(255,255,255,.96);
+  --panel-2: rgba(255,255,255,.98);
+  --text: var(--kbwg-text);
+  --muted: var(--kbwg-muted);
+  --line: var(--kbwg-line);
+  --accent: var(--kbwg-gold);
+  --accent-2: #2a5b9a;
+  --shadow: var(--kbwg-shadow-soft);
+}
+.petconnect-scope .page{
+  width: min(1140px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 26px 0 46px;
+}
+.petconnect-scope h1,
+.petconnect-scope h2,
+.petconnect-scope h3,
+.petconnect-scope .section-title,
+.petconnect-scope .sectionTitle{
+  color: var(--kbwg-text) !important;
+  letter-spacing: -0.02em;
+}
+.petconnect-scope h1{ font-weight: 800; line-height: 1.04; }
+.petconnect-scope p,
+.petconnect-scope .meta,
+.petconnect-scope .small,
+.petconnect-scope .section-subtitle,
+.petconnect-scope .sectionLead,
+.petconnect-scope .noteTiny{ line-height: 1.7; color: var(--kbwg-muted); }
+.petconnect-scope .section-kicker,
+.petconnect-scope .hero-kicker,
+.petconnect-scope .chip{
+  color: var(--kbwg-gold-deep) !important;
+}
+.petconnect-scope .hero,
+.petconnect-scope .card,
+.petconnect-scope .contentCard,
+.petconnect-scope .petfinder-home-card,
+.petconnect-scope .how-it-works-card,
+.petconnect-scope .animalCard,
+.petconnect-scope .mini-feed-card,
+.petconnect-scope .summary-hero,
+.petconnect-scope dialog,
+.petconnect-scope .verify-modal-card,
+body.page-bundles .bundleCard,
+body.page-bundles .bundleModalPanel,
+body.page-bundles .bundleItem,
+body.page-bundles .pickCard,
+body.page-bundles .bundlePreviewItem{
+  background: linear-gradient(180deg, rgba(255,255,255,.985), rgba(252,252,253,.98)) !important;
+  border: 1px solid var(--kbwg-line) !important;
+  box-shadow: var(--kbwg-shadow-card) !important;
+  border-radius: var(--kbwg-radius-lg) !important;
+}
+.petconnect-scope .card,
+.petconnect-scope .contentCard{ padding: 22px; }
+
+.petconnect-scope .petfinder-master-hero{
+  padding: 34px 26px !important;
+  border-radius: var(--kbwg-radius-xl) !important;
+  background:
+    radial-gradient(circle at top left, rgba(212,175,55,.16), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(42,91,154,.09), transparent 34%),
+    linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,249,251,.97)) !important;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy{ max-width: 72ch; }
+.petconnect-scope .petfinder-master-hero h1{
+  font-size: clamp(2.25rem, 1.7rem + 1.8vw, 3.65rem) !important;
+  margin-bottom: .55rem;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy p{
+  font-size: 1.08rem;
+  max-width: 58ch;
+  margin-inline: auto;
+}
+.petconnect-scope .petfinder-master-hero .decorPhoto{
+  opacity: .17;
+  filter: saturate(.88) contrast(1.02);
+}
+.petconnect-scope .trust-badge,
+.petconnect-scope .badge,
+.petconnect-scope .ticker-item,
+.petconnect-scope .location-pill,
+.petconnect-scope .detection-pill,
+.petconnect-scope .step-pill{
+  border-radius: 999px !important;
+}
+.petconnect-scope .trust-badge{
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(44,62,80,.09);
+  box-shadow: 0 6px 16px rgba(44,62,80,.04);
+  color: var(--kbwg-text);
+}
+.petconnect-scope .heroActions,
+.petconnect-scope .actions{ gap: 12px; }
+
+.petconnect-scope .btn.primary,
+.petconnect-scope .button-link.lost,
+.petconnect-scope .button-link.good,
+.petconnect-scope .button-link.found,
+.petconnect-scope #submit-report-btn,
+.petconnect-scope .fab-main,
+body.page-bundles .bundleBtn,
+body.page-bundles .miniBtn:not(.secondary){
+  background: linear-gradient(135deg, var(--kbwg-gold), var(--kbwg-gold-deep)) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 12px 24px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(212,175,55,.24) !important;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.petconnect-scope .btn.primary:hover,
+.petconnect-scope .button-link.lost:hover,
+.petconnect-scope .button-link.good:hover,
+.petconnect-scope .button-link.found:hover,
+.petconnect-scope #submit-report-btn:hover,
+.petconnect-scope .fab-main:hover,
+body.page-bundles .bundleBtn:hover,
+body.page-bundles .miniBtn:not(.secondary):hover{
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 16px 34px rgba(212,175,55,.30) !important;
+}
+.petconnect-scope .btn.ghost,
+.petconnect-scope button.secondary,
+.petconnect-scope .button-link.secondary,
+body.page-bundles .miniBtn.secondary,
+body.page-bundles .modalClose{
+  background: rgba(255,255,255,.98) !important;
+  color: var(--kbwg-text) !important;
+  border: 1px solid rgba(44,62,80,.12) !important;
+  border-radius: 999px !important;
+  box-shadow: 0 8px 18px rgba(44,62,80,.05) !important;
+}
+.petconnect-scope .hero-tertiary{
+  background: transparent !important;
+  border-style: dashed !important;
+}
+.petconnect-scope input,
+.petconnect-scope textarea,
+.petconnect-scope select,
+body.page-bundles .pickerTop input[type="search"],
+body.page-bundles .pickerTop select{
+  border-radius: 16px !important;
+  border: 1px solid rgba(44,62,80,.14) !important;
+  background: #fff !important;
+  color: var(--kbwg-text) !important;
+  box-shadow: inset 0 1px 2px rgba(44,62,80,.02);
+}
+.petconnect-scope input:focus,
+.petconnect-scope textarea:focus,
+.petconnect-scope select:focus,
+body.page-bundles .pickerTop input[type="search"]:focus,
+body.page-bundles .pickerTop select:focus{
+  outline: 3px solid rgba(212,175,55,.18) !important;
+  border-color: rgba(212,175,55,.38) !important;
+}
+.petconnect-scope .petfinder-home-card-grid,
+.petconnect-scope .how-it-works-grid{
+  gap: 18px;
+}
+.petconnect-scope .petfinder-home-card,
+.petconnect-scope .how-it-works-card{
+  padding: 20px;
+}
+.petconnect-scope .petfinder-home-card .icon,
+.petconnect-scope .how-it-works-card .stepIndex{
+  background: rgba(212,175,55,.14) !important;
+  color: var(--kbwg-gold-deep) !important;
+}
+.petconnect-scope .petfinder-home-card .cta{ color: var(--kbwg-gold-deep) !important; }
+.petconnect-scope .reunion-ticker-shell{
+  margin-top: 20px;
+  padding: 10px 12px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.96) !important;
+  border: 1px solid rgba(44,62,80,.08) !important;
+  box-shadow: var(--kbwg-shadow-soft) !important;
+}
+.petconnect-scope .ticker-item{
+  color: var(--kbwg-text) !important;
+  background: rgba(212,175,55,.10) !important;
+  border: 1px solid rgba(212,175,55,.18) !important;
+  padding: 8px 14px;
+}
+.petconnect-scope .notice{
+  border-right-color: rgba(212,175,55,.65) !important;
+  background: rgba(212,175,55,.10) !important;
+  color: var(--kbwg-text) !important;
+}
+.petconnect-scope .summary-hero,
+.petconnect-scope .hero-shell,
+.petconnect-scope .petfinder-lead-card{
+  border-radius: var(--kbwg-radius-xl) !important;
+}
+.petconnect-scope .section-head,
+.petconnect-scope .space-between{ gap: 14px; }
+body.page-bundles .bundleHero .heroCopy p{ max-width: 60ch; }
+body.page-bundles .bundleCard .bundleTop,
+body.page-bundles .bundlePreviewItem,
+body.page-bundles .bundleItem,
+body.page-bundles .pickCard{
+  gap: 12px;
+}
+body.page-bundles .bundleCard,
+body.page-bundles .pickCard{ transition: transform .18s ease, box-shadow .18s ease; }
+body.page-bundles .bundleCard:hover,
+body.page-bundles .pickCard:hover,
+.petconnect-scope .animalCard:hover,
+.petconnect-scope .petfinder-home-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(44,62,80,.10) !important;
+}
+body.page-bundles .bundlePreviewItem,
+body.page-bundles .bundleItem,
+body.page-bundles .pickCard{
+  background: rgba(249,249,249,.95) !important;
+}
+
+@media (max-width: 760px){
+  .petconnect-scope .page{ width: calc(100% - 24px); padding-top: 18px; }
+  .petconnect-scope .petfinder-master-hero{ padding: 24px 16px !important; }
+  .petconnect-scope .petfinder-master-hero h1{ font-size: clamp(1.95rem, 1.55rem + 1.6vw, 2.65rem) !important; }
+  .petconnect-scope .heroActions,
+  .petconnect-scope .actions{ gap: 10px; }
+  .petconnect-scope .card,
+  .petconnect-scope .contentCard,
+  .petconnect-scope .petfinder-home-card,
+  .petconnect-scope .how-it-works-card{ padding: 16px; }
+}
+
+
+/* =========================
+   KBWG funnel + affiliate bridge refresh
+   ========================= */
+:root{
+  --kbwg-olive: #617251;
+}
+#siteHeader .nav > a.navCtaLink.active,
+#siteHeader .nav > a.navCtaLink[aria-current="page"]{
+  background: linear-gradient(135deg, #d4af37, #aa8a1a);
+  color:#fff;
+  box-shadow: 0 10px 24px rgba(212,175,55,.22);
+}
+.petconnect-scope .petfinder-master-hero{
+  padding-bottom: 22px;
+}
+.petconnect-scope .petfinder-master-hero .heroInner{
+  min-height: clamp(380px, 62vh, 640px);
+  display:flex;
+  align-items:center;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy{
+  max-width: 72ch;
+  padding: 18px 0;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy h1{
+  font-size: clamp(2.3rem, 1.6rem + 2.2vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: .8rem;
+}
+.petconnect-scope .petfinder-master-hero .heroCopy p{
+  color: var(--kbwg-text);
+  font-size: 1.1rem;
+}
+.petconnect-scope .petfinder-master-hero .trust-badge{
+  background: rgba(255,255,255,.75);
+  border: 1px solid var(--kbwg-line);
+  box-shadow: var(--kbwg-shadow-soft);
+}
+.petconnect-scope .petfinder-master-hero .btn.primary,
+.main-btn{
+  background: linear-gradient(135deg, var(--kbwg-gold), var(--kbwg-gold-deep));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: none;
+  font-weight: 800;
+  transition: transform .2s ease, box-shadow .2s ease;
+  cursor: pointer;
+}
+.petconnect-scope .petfinder-master-hero .btn.primary:hover,
+.main-btn:hover{
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(212,175,55,.35);
+}
+.petconnect-scope .petfinder-master-hero .btn.ghost{
+  border-radius: 50px;
+}
+.petconnect-scope .petfinder-home-card-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+.petconnect-scope .petfinder-home-card,
+.latest-pet-card,
+.affiliate-bridge-card,
+.recommend-card,
+.shop-category-card{
+  background: rgba(255,255,255,.94);
+  border: 1px solid var(--kbwg-line);
+  border-radius: 24px;
+  box-shadow: var(--kbwg-shadow-card);
+}
+.petconnect-scope .petfinder-home-card{
+  padding: 20px;
+}
+.latest-pets-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.latest-pet-card{
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.latest-pet-media{
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, rgba(212,175,55,.14), rgba(97,114,81,.15));
+}
+.latest-pet-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.latest-pet-placeholder{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #fff;
+}
+.latest-pet-placeholder.tone-warm{ background: linear-gradient(135deg, #d4af37, #c18356); }
+.latest-pet-placeholder.tone-calm{ background: linear-gradient(135deg, #7997b8, #56789e); }
+.latest-pet-placeholder.tone-olive{ background: linear-gradient(135deg, #617251, #869371); }
+.latest-pet-placeholder.tone-soft{ background: linear-gradient(135deg, #a288b6, #7a6fbb); }
+.latest-pet-body{
+  padding: 18px;
+  display:grid;
+  gap: 12px;
+}
+.latest-pet-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+}
+.latest-pet-body strong{
+  color: var(--kbwg-text);
+  font-size: 1.06rem;
+}
+.latest-pet-body p{
+  margin:0;
+  color: var(--kbwg-muted);
+  line-height: 1.6;
+  min-height: 3.2em;
+}
+.latest-pet-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  color: var(--kbwg-muted);
+  font-size: .92rem;
+}
+.text-link{
+  color: var(--kbwg-dark);
+  font-weight: 800;
+  text-decoration:none;
+}
+.text-link:hover{ color: var(--kbwg-gold-deep); }
+.affiliate-soft-banner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(97,114,81,.16);
+  background: linear-gradient(135deg, rgba(97,114,81,.08), rgba(212,175,55,.10));
+}
+.affiliate-bridge-grid,
+.recommend-grid,
+.shop-category-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.affiliate-bridge-card,
+.recommend-card,
+.shop-category-card{
+  padding: 20px;
+  text-decoration:none;
+  color: inherit;
+}
+.affiliate-bridge-card strong,
+.recommend-card strong,
+.shop-category-card strong{
+  display:block;
+  margin: 6px 0 10px;
+  font-size: 1.06rem;
+  color: var(--kbwg-text);
+}
+.affiliate-bridge-card p,
+.recommend-card p,
+.shop-category-card p{
+  margin:0;
+  color: var(--kbwg-muted);
+  line-height:1.65;
+}
+.affiliate-bridge-card:hover,
+.recommend-card:hover,
+.shop-category-card:hover,
+.latest-pet-card:hover{
+  transform: translateY(-3px);
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: rgba(97,114,81,.10);
+  color: var(--kbwg-olive);
+  font-size: .82rem;
+  font-weight: 800;
+}
+.affiliate-disclosure{
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.72);
+  border: 1px dashed rgba(97,114,81,.26);
+  line-height: 1.7;
+}
+.shop-categories-panel .contentCard,
+.petfinder-recommend-shell,
+.affiliate-bridge-shell,
+.latest-pets-shell{
+  overflow: hidden;
+}
+@media (max-width: 980px){
+  .petconnect-scope .petfinder-home-card-grid,
+  .latest-pets-grid,
+  .affiliate-bridge-grid,
+  .recommend-grid,
+  .shop-category-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 760px){
+  .petconnect-scope .petfinder-home-card-grid,
+  .latest-pets-grid,
+  .affiliate-bridge-grid,
+  .recommend-grid,
+  .shop-category-grid{
+    grid-template-columns: 1fr;
+  }
+  .affiliate-soft-banner,
+  .latest-pet-meta{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+
+/* === Real full pass additions === */
+:root{
+  --kbwg-olive: #61745d;
+  --kbwg-muted: #f5f3ee;
+}
+
+#siteHeader{backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);}
+
+.btn-primary-solid,
+.petconnect-scope .btn.btn-primary-solid{
+  background: linear-gradient(135deg, var(--kbwg-gold), #ad8a12);
+  color: #fff;
+  border: 0;
+  box-shadow: 0 12px 24px rgba(212,175,55,.25);
+}
+.btn-outline,
+.petconnect-scope .btn.btn-outline{
+  background: rgba(255,255,255,.86);
+  color: var(--kbwg-dark);
+  border: 1px solid rgba(22,58,99,.12);
+}
+.home-hero-actions .hero-found-now{min-width: 180px;}
+
+.success-ticker-inline{
+  margin-top: 14px;
+  display:inline-flex;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(22,58,99,.08);
+  font-weight: 800;
+}
+
+.home-sticky-search-shell{position:sticky; top:80px; z-index: 20; margin-top:-20px;}
+.home-sticky-search{background: rgba(255,255,255,.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 16px 40px rgba(15,23,42,.08);}
+.home-search-form{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px;}
+.home-search-form input{min-height:52px; border-radius:16px; border:1px solid rgba(22,58,99,.12); padding:0 16px; font:inherit; background:#fff;}
+.quick-filter-row{display:flex; flex-wrap:wrap; gap:10px;}
+.quick-filter-chip{border:1px solid rgba(22,58,99,.12); background:#fff; border-radius:999px; padding:10px 14px; font:inherit; font-weight:700; cursor:pointer;}
+.quick-filter-chip:hover{border-color:rgba(22,58,99,.26); transform:translateY(-1px);}
+
+.latest-pets-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;}
+.latest-pet-card,
+.affiliate-bridge-card,
+.shop-guide-card{
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  border-radius:24px;
+  overflow:hidden;
+}
+.latest-pet-card:hover,
+.affiliate-bridge-card:hover,
+.shop-guide-card:hover{transform:translateY(-5px); box-shadow:0 12px 30px rgba(212,175,55,.15);}
+.latest-pet-media{display:block; aspect-ratio: 1 / 1; background:#eef2f5; overflow:hidden;}
+.latest-pet-media img{width:100%; height:100%; object-fit:cover;}
+.latest-pet-body{padding:18px; display:grid; gap:10px;}
+.latest-pet-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+.latest-pet-meta{display:flex; justify-content:space-between; gap:10px; align-items:center; font-size:.9rem; color:#5b6677;}
+.latest-pet-placeholder{display:grid; place-items:center; height:100%; font-size:2rem;}
+
+.pet-card-skeleton,.skeleton-card{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation:skeleton-pulse 1.5s infinite; border-radius:12px; height:280px;}
+@keyframes skeleton-pulse{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+.inline-help-card{padding:18px; border-radius:24px; background:#fdfaf0; border-right:4px solid var(--kbwg-gold); box-shadow:0 8px 20px rgba(15,23,42,.04);}
+.inline-help-card .eyebrow{display:inline-block; margin-bottom:8px; color:var(--kbwg-dark); font-weight:800;}
+.inline-help-card p{margin:.4rem 0 0;}
+.primary-card-action{background:rgba(22,58,99,.92); color:#fff !important;}
+
+.help-tip-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px;}
+.help-tip-card{background:#fdfaf0; border-right:4px solid var(--kbwg-gold); padding:16px; border-radius:18px;}
+.help-tip-card-soft{background:#f7f7f4; border-right-color:var(--kbwg-olive);}
+.map-placeholder.hidden{display:none;}
+.map-placeholder{min-height:240px; margin-top:18px; border-radius:22px; border:1px dashed rgba(22,58,99,.16); background:linear-gradient(180deg,#fff,#f7f8fb);}
+
+.pet-detail-shell{gap:18px;}
+.pet-detail-hero{display:grid; grid-template-columns:minmax(280px, 420px) minmax(0,1fr); gap:22px; align-items:start;}
+.pet-detail-media{border-radius:28px; overflow:hidden; background:#eef2f5;}
+.pet-detail-media img{display:block; width:100%; aspect-ratio:1 / 1; object-fit:cover;}
+.pet-status-badge{display:inline-flex; padding:8px 12px; border-radius:999px; font-weight:800; margin-bottom:10px;}
+.pet-status-badge.status-lost{background:#fef0ef; color:#b94233;}
+.pet-status-badge.status-found{background:#eef7ff; color:#1c5da3;}
+.pet-status-badge.status-reunited{background:#eef8f0; color:#2f7a3f;}
+.pet-detail-main h1{margin:0 0 10px; font-size:clamp(2rem,1.8rem + 1vw,3rem);}
+.pet-detail-lead{font-size:1.04rem; color:#40516b; max-width:56ch;}
+.pet-detail-meta-line{font-weight:700; color:#617089;}
+.pet-detail-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+.pet-detail-strip{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px;}
+.detail-mini-card{background:#fff; border-radius:20px; padding:16px; border:1px solid rgba(22,58,99,.08); box-shadow:0 10px 22px rgba(15,23,42,.05); display:grid; gap:6px;}
+.detail-mini-card span{font-size:.86rem; color:#6d7787;}
+.pet-detail-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;}
+.pet-detail-list{margin:0; padding-inline-start:18px; display:grid; gap:8px;}
+.pet-detail-list.ordered{padding-inline-start:22px;}
+.pet-map-placeholder{min-height:180px; display:grid; align-content:center; gap:8px; border-radius:18px; padding:16px; background:#f7f8fb; border:1px dashed rgba(22,58,99,.14);}
+.pet-detail-contact-box{display:flex; flex-wrap:wrap; gap:10px;}
+.pet-detail-empty-media{display:grid; place-items:center; min-height:320px; color:#6b7280;}
+.report-success-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px;}
+.success-checklist-card{background:#f8f8f5; border-radius:18px; padding:16px; border:1px solid rgba(22,58,99,.08); display:grid; gap:12px;}
+.badge-vegan{position:absolute; top:14px; left:14px; background:#f1f6ef; color:#476146; padding:6px 10px; border-radius:999px; font-size:.78rem; font-weight:800;}
+.shop-guide-card{position:relative; padding:22px;}
+.affiliate-guide-disclosure{background:#f8f8f5; border-radius:18px; padding:16px;}
+
+@media (max-width: 960px){
+  .latest-pets-grid,.help-tip-grid,.pet-detail-grid,.report-success-grid{grid-template-columns:1fr;}
+  .pet-detail-hero{grid-template-columns:1fr;}
+  .pet-detail-strip{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 760px){
+  main{padding-bottom:100px;}
+  .home-search-form{grid-template-columns:1fr;}
+  .home-sticky-search-shell{top:72px;}
+  .pet-detail-strip{grid-template-columns:1fr;}
+}

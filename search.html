@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>KBWG | אבדות ומציאות</title>
+<meta content="KBWG | העלאת תמונה, חיפוש התאמות ודיווח מהיר לבעלי חיים שאבדו או נמצאו." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&amp;family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="petconnect-assets/styles.scoped.css?v=2026-04-05-v1" rel="stylesheet"/>
+<link href="css/main.css?v=2026-04-06-v9" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+<link href="manifest.webmanifest?v=2026-04-06-v3" rel="manifest"/>
+<meta content="#0d4f63" name="theme-color"/>
+</head>
+<body class="petconnect-kbwg-page">
+<div id="siteHeaderMount"></div>
+<div id="main">
+<div class="petconnect-scope"><main class="page unified-page">
+
+<section class="card hero-slab stack section-shell hero-shell petfinder-lead-card">
+<div class="chip">אבדות ומציאות</div>
+<h1 style="margin:0;">אבדות ומציאות בזמן אמת</h1>
+<p class="meta">העלו תמונה, סמנו את בעל החיים, וקבלו התאמות שעשויות לעזור לזהות אותו במהירות.</p>
+<div class="notice" id="status">טוען…</div>
+<form class="stack" id="search-form" novalidate="">
+<div class="field-grid">
+<div class="stack" style="gap:8px;">
+<input accept="image/*" aria-label="בחירת תמונת חיה" capture="environment" id="query-file" required="" type="file"/>
+<div class="tip-bubble small"><strong>טיפ לצילום:</strong> נסי לצלם מגובה החיה, באור יום, וכמה שפחות רקע מסביב — זה משפר גם את החיפוש המיידי וגם את הדיווח.</div>
+</div>
+<div class="stack" style="gap:8px;">
+<div class="inline-meter">
+<label for="min-score">סף התאמה מינימלי</label>
+<output for="min-score" id="min-score-value">55%</output>
+</div>
+<input aria-label="סף התאמה מינימלי" id="min-score" max="90" min="35" step="1" type="range" value="55"/>
+</div>
+</div>
+<div class="field-grid">
+<input aria-label="שם העיר לדיווח" autocomplete="address-level2" id="city-name" placeholder="עיר לדיווח 106, למשל תל אביב-יפו" type="text"/>
+<div class="row">
+<button class="secondary" id="locate-btn" type="button">שימוש במיקום הנוכחי</button>
+<div class="location-pill" id="location-status">המיקום יופיע כאן לאחר בחירה.</div>
+</div>
+</div>
+<div class="field-grid">
+<input aria-label="כתובת משוערת" class="readonly-input" id="location-text" placeholder="כתובת / אזור משוער יופיעו כאן אוטומטית" readonly="" type="text"/>
+<input aria-label="זמן הדיווח האוטומטי" class="readonly-input" id="reported-at" placeholder="זמן הדיווח יתמלא אוטומטית" readonly="" type="text"/>
+</div>
+<div class="field-grid">
+<label class="stack small" style="gap:6px;">
+<span>רדיוס חיפוש משוער (ק"מ)</span>
+<input aria-label="רדיוס חיפוש משוער" id="search-radius" max="10" min="1" step="1" type="range" value="2"/>
+</label>
+<div class="notice" id="search-radius-note">הרדיוס עוזר למקד את החיפוש, את השיתופים ואת ההתראות סביב האזור שבו נראתה החיה.</div>
+</div>
+<div class="field-grid">
+<div class="notice" id="connection-note">האתר יתאים אוטומטית את דחיסת התמונה למהירות הרשת.</div>
+<div class="row wrap compact-row">
+<label class="small checkbox-inline"><input id="low-data-toggle" type="checkbox"/> מצב חסכוני לגלישה חלשה</label>
+<button class="secondary small" id="alert-optin-btn" type="button">הפעלת התראות שכונתיות</button>
+</div>
+</div>
+<div class="field-grid">
+<input aria-label="סוג החיה לחיפוש" id="query-animal-type" placeholder="סוג חיה, למשל כלב / חתול" type="text"/>
+<input aria-label="גזע משוער" id="breed-name" placeholder="גזע משוער, למשל לברדור" type="text"/>
+</div>
+<div class="suggestion-chips" id="breed-suggestion-chips"></div>
+<div class="row wrap compact-row">
+<button class="lost" id="search-btn" type="submit">מצאו התאמות עכשיו</button>
+<button class="found" id="report-direct-btn" type="button">פרסמו את המודעה עכשיו</button>
+</div>
+</form>
+<div class="small" id="library-stats"></div>
+<div class="hero-mini-steps"><span class="badge">1 העלאת תמונה</span><span class="badge">2 מיקוד החיה</span><span class="badge">3 תוצאות או דיווח</span></div>
+<div class="small" id="prep-note"></div>
+<div class="progress-block" id="search-progress">
+<div class="progress-head">
+<strong>מצב סריקה</strong>
+<span class="small" id="search-progress-label">ממתין לתמונה לחיפוש.</span>
+</div>
+<div aria-hidden="true" class="progress-track"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-fill" id="search-progress-fill" role="progressbar"></div></div>
+</div>
+</section>
+<section class="grid grid-2 section-grid" style="margin-top:16px;">
+<article class="card stack section-shell preview-card" id="preview-card">
+<div class="space-between">
+<div class="section-head"><div class="section-kicker">בחירה מדויקת</div><h2 class="section-title" style="margin:0;">סימון אזור החיה</h2><div class="section-subtitle">סמני את אזור החיה או תני לסריקה החכמה להתמקד אוטומטית.</div></div>
+<label class="small" style="display:flex; align-items:center; gap:8px;">
+<input checked="" id="show-box" type="checkbox"/>
+              להציג מסגרת בחירה
+            </label>
+</div>
+<div class="preview-guide-shell">
+<canvas class="preview" id="preview-canvas"></canvas>
+<div aria-hidden="true" class="face-guide-overlay">
+<div class="face-guide-ring"></div>
+<div class="face-guide-text">מרכזי את פני החיה בתוך העיגול לקבלת תוצאה טובה יותר</div>
+</div>
+</div>
+<div class="small" id="selection-hint">אפשר לגרור מלבן סביב החיה. זה חשוב במיוחד כשיש גם אנשים או רקע עמוס.</div>
+<div class="row">
+<button class="secondary small" id="smart-scan-btn" type="button">גזירה אוטומטית של החיה</button>
+<button class="secondary small" id="use-whole-btn" type="button">שימוש בכל התמונה</button>
+<button class="small" disabled="" id="run-selected-btn" type="button">חיפוש לפי האזור שסומן</button>
+</div>
+<div class="row wrap compact-row">
+<label class="small checkbox-inline"><input checked="" id="subject-only-toggle" type="checkbox"/> מיקוד אוטומטי בחיה</label>
+<label class="small checkbox-inline"><input checked="" id="circle-mask-toggle" type="checkbox"/> מסכה עגולה לחיפוש</label>
+<div class="detection-pill" id="detection-status">ממתין לתמונה. סריקה חכמה תנסה לזהות חיה ולהתעלם מאנשים.</div>
+</div>
+</article>
+<article class="card stack section-shell">
+<div class="section-head"><div class="section-kicker">תצוגה מקדימה</div><h2 class="section-title">האזור שנשלח לחיפוש</h2><div class="section-subtitle">כך נראה האזור שנבדק, כדי להתמקד בחיה עצמה ולהקטין השפעה של הרקע.</div></div>
+<img alt="האזור שנבחר לחיפוש" class="hidden" id="query-crop"/>
+<div class="small" id="crop-meta">עדיין לא נבחר אזור חיה.</div>
+<div class="notice warn">כדי לזהות חיה מתוך תמונה עם אדם, אפשר לתת לסריקה החכמה להתמקד אוטומטית בחיה. אם אין התאמה חזקה, יוצגו גם חיות עם צבעים דומים.</div>
+<div class="small" id="ai-crop-note">✅ אפשר לנסות גזירה אוטומטית: המערכת תנסה להתמקד בחיה לבד. אם הזיהוי לא בטוח, תמיד אפשר לתקן ידנית.</div>
+<div class="small privacy-note" id="privacy-note">אם תשתמשי במיקום, בשיתופים ובטיוטת 106 יופיע אזור משוער בלבד כדי לשמור על פרטיות.</div>
+<div class="small" id="smart-hint">אם אינך בטוחה בגזע, השאירי את השדה ריק. אחרי הסריקה נציע גזעים נפוצים לפי סוג החיה ולפי התוצאות המובילות.</div>
+</article>
+</section>
+<section class="card stack section-shell section-shell--minimal" style="margin-top:16px;">
+<details class="soft-disclosure">
+<summary>הוספת מאגר נוסף לחיפוש</summary>
+<div class="soft-disclosure-body stack" style="margin-top:12px;">
+<div class="small">אפשר לצרף מאגר נוסף באופן זמני כדי להרחיב את החיפוש.</div>
+<div class="row wrap compact-row">
+<input accept="application/json,.json" id="import-json" type="file"/>
+<button class="secondary small" id="clear-imported" type="button">ניקוי המיובא</button>
+</div>
+</div>
+</details>
+</section>
+<section class="card stack section-shell" id="results-section" style="margin-top:16px;">
+<div class="space-between">
+<div class="section-head"><div class="section-kicker">התאמות</div><h2 class="section-title" style="margin:0;">מצאנו התאמות שעשויות לעזור</h2><div class="section-subtitle">כאן תראו התאמה חזקה, מועמדים דומים או המלצה לצילום נוסף וטוב יותר.</div></div>
+<div class="small">מעל 90% תוצג התאמה חזקה, בין 60% ל-90% תוצג גלריית מועמדים, ומתחת לזה תקבלי המלצה לנסות עוד תמונה. כל שיתוף כאן יכול להיות קצה החוט הבא.</div>
+</div>
+<div class="filter-bar">
+<label class="stack small" style="gap:6px;">
+<span>סינון לפי סוג</span>
+<select id="filter-animal-type">
+<option value="">כל הסוגים</option>
+</select>
+</label>
+<label class="stack small" style="gap:6px;">
+<span>סינון לפי גזע</span>
+<select id="filter-breed">
+<option value="">כל הגזעים</option>
+</select>
+</label>
+<label class="stack small" style="gap:6px;">
+<span>סינון לפי מקור</span>
+<select id="filter-source">
+<option value="">כל המקורות</option>
+<option value="repo">מאגר ראשי</option>
+<option value="local">נוסף</option>
+<option value="imported">מיובא</option>
+</select>
+</label>
+<label class="small checkbox-inline">
+<input id="filter-strong-only" type="checkbox"/>
+            רק התאמות חזקות
+          </label>
+<div class="summary-actions" style="margin-inline-start:auto;">
+<button class="small" disabled="" id="share-top-btn" type="button">שיתוף התוצאה המובילה</button>
+<button class="secondary small" disabled="" id="whatsapp-top-btn" type="button">שליחה בוואטסאפ</button>
+<button class="secondary small" disabled="" id="community-top-btn" type="button">הודעת שכונה</button>
+<button class="secondary small" disabled="" id="poster-top-btn" type="button">פלייר PNG</button>
+<button class="secondary small" disabled="" id="print-poster-top-btn" type="button">פוסטר להדפסה</button>
+<a class="button-link secondary small" href="mailto:?subject=%D7%93%D7%99%D7%95%D7%95%D7%97%20%D7%9C%D7%9E%D7%95%D7%A7%D7%93%20106" id="report-top-btn">טיוטת 106</a>
+</div>
+</div>
+<div class="suggestion-chips" id="breed-quick-filters"></div>
+<div class="hidden" id="summary"></div>
+<div class="hidden" id="report-cta-container"></div>
+<div aria-live="polite" class="empty empty-state" id="match-results-container">התוצאות שלך יופיעו כאן.</div>
+</section>
+<section class="card stack section-shell petfinder-recommend-shell" style="margin-top:16px;">
+  <div class="section-head">
+    <div class="section-kicker">המשך רך ושימושי</div>
+    <h2 class="section-title" style="margin:0;">מוצרים מומלצים לאיתור בטוח ולהתחלה חדשה</h2>
+    <div class="section-subtitle">תגי זיהוי, ציוד שימושי וחבילות התחלה שיכולים לעזור לפני החזרה הביתה ואחריה.</div>
+  </div>
+  <div class="recommend-grid">
+    <article class="recommend-card">
+      <span class="eyebrow">איתור</span>
+      <strong>תגים, קולרים וציוד זיהוי</strong>
+      <p>להחזיק בבית מראש, או להכין לקראת החזרה הביתה.</p>
+      <a class="button-link secondary small" href="products.html">למוצרים טבעוניים</a>
+    </article>
+    <article class="recommend-card">
+      <span class="eyebrow">Calm Home</span>
+      <strong>חטיפים, הרגעה ונחיתה רכה</strong>
+      <p>בחירה עדינה שתעזור להפחית סטרס בימים הראשונים.</p>
+      <a class="button-link secondary small" href="bundles.html">לחבילות האימוץ</a>
+    </article>
+    <article class="recommend-card">
+      <span class="eyebrow">Community</span>
+      <strong>למה בחרנו דווקא בהם</strong>
+      <p>מוצרים שלא נוסו על בעלי חיים, עם ערך אמיתי למשפחות ולמאמצים.</p>
+      <a class="button-link secondary small" href="guides.html">לבלוג שלנו</a>
+    </article>
+  </div>
+  <div class="affiliate-disclosure small">כאן תמצאו המלצות לציוד וחבילות שיכולים לעזור בזיהוי, בפרסום הדיווח ובהתארגנות לקראת החזרה הביתה.</div>
+</section>
+<div class="sticky-report-bar hidden" id="sticky-report-bar">
+<div class="row wrap compact-row">
+<div class="stack" style="gap:6px;">
+<strong>לא נמצאה התאמה?</strong>
+<div class="small">הפכי את התמונה שכבר חיפשת לדיווח על חיה שנמצאה — בלי להעלות שוב.</div>
+</div>
+<div class="row wrap compact-row">
+<button class="found small" id="sticky-report-btn" type="button">יצירת דיווח</button>
+<button class="secondary small" id="sticky-quick-btn" type="button">דיווח מהיר</button>
+</div>
+</div>
+</div>
+
+<dialog class="verify-modal" id="verification-modal">
+<form class="verify-modal-card stack section-shell section-shell--sub" method="dialog">
+<div class="space-between">
+<h2 class="section-title" id="verification-title" style="margin:0;">בדיקת סימן זיהוי</h2>
+<button class="secondary small" type="submit">סגירה</button>
+</div>
+<div class="notice" id="verification-prompt">שאלה פרטית תופיע כאן.</div>
+<input aria-label="תשובת סימן הזיהוי" id="verification-answer" placeholder="כתבי את התשובה כפי שהבעלים אמור לדעת" type="text"/>
+<div class="row">
+<button id="verification-check-btn" type="button">בדיקת תשובה</button>
+</div>
+<div class="small" id="verification-result">האימות נשמר פרטי ומאובטח.</div>
+</form>
+</dialog>
+</main></div>
+</div>
+<div id="siteFooterMount"></div>
+<script defer src="assets/js/layout-inject.js?v=2026-04-06-v3"></script>
+<script defer src="assets/js/site.js?v=2026-04-06-v3"></script>
+<script defer src="petconnect-assets/global.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/init.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/i18n.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/common.js?v=20260403v48"></script>
+<script defer src="petconnect-assets/app.js?v=20260403v48"></script>
+<script defer src="search.inline.js?v=20260403v48"></script>
+</body>
+</html>
