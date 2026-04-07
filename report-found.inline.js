@@ -50,6 +50,7 @@ async function runReportFoundPage() {
   const step3El = document.getElementById('report-step-3');
   const voiceStatusEl = document.getElementById('voice-status');
   const voiceAudioEl = document.getElementById('voice-audio');
+  const voiceWaveEl = document.getElementById('voice-wave');
 
   [animalTypeEl, breedEl, colorEl, cityEl].forEach(clearValidityOnInput);
   attachCityAutocomplete?.(cityEl);
@@ -167,6 +168,8 @@ function setAudioData(dataUrl) {
   }
   if (voiceClearBtn) voiceClearBtn.disabled = !currentAudioData;
   if (voiceStatusEl) voiceStatusEl.textContent = currentAudioData ? 'הקלטה קולית נשמרה.' : 'עדיין אין הקלטה.';
+  document.body.classList.remove('is-recording-audio');
+  voiceWaveEl?.classList.toggle('active', false);
   updateFormProgress();
 }
 
@@ -192,6 +195,9 @@ async function startVoiceRecording() {
   if (voiceStartBtn) voiceStartBtn.disabled = true;
   if (voiceStopBtn) voiceStopBtn.disabled = false;
   if (voiceStatusEl) voiceStatusEl.textContent = 'מקליט… אפשר לעצור אחרי כמה שניות.';
+  document.body.classList.add('is-recording-audio');
+  voiceWaveEl?.classList.toggle('active', true);
+  vibrateIfPossible?.(14);
 }
 
   async function maybeAutofillImageTraits(dataUrl) {
@@ -435,8 +441,8 @@ async function startVoiceRecording() {
     await openPosterWindow(payload);
   });
 
-  voiceStartBtn?.addEventListener('click', async () => { try { await startVoiceRecording(); } catch (error) { console.error(error); setStatus(statusEl, 'לא הצלחנו להתחיל הקלטה.', { tone: 'warn' }); } });
-  voiceStopBtn?.addEventListener('click', () => { try { recorder?.stop(); } catch (error) { console.warn(error); } });
+  voiceStartBtn?.addEventListener('click', async () => { try { await startVoiceRecording(); } catch (error) { console.error(error); document.body.classList.remove('is-recording-audio'); voiceWaveEl?.classList.toggle('active', false); setStatus(statusEl, 'לא הצלחנו להתחיל הקלטה.', { tone: 'warn' }); } });
+  voiceStopBtn?.addEventListener('click', () => { try { recorder?.stop(); vibrateIfPossible?.(10); } catch (error) { console.warn(error); } });
   voiceClearBtn?.addEventListener('click', () => setAudioData(''));
   [animalTypeEl, breedEl, colorEl, sizeEl, cityEl, locationEl, detailsEl, phoneEl].forEach((el) => {
     el?.addEventListener('input', () => {
@@ -455,6 +461,9 @@ async function startVoiceRecording() {
   window.addEventListener('online', () => { updateConnectivityStatus(); setStatus(statusEl, 'החיבור חזר. אפשר להמשיך או לשתף את הדיווח.', { tone: 'success' }); });
   window.addEventListener('offline', () => { updateConnectivityStatus(); });
   updateConnectivityStatus();
+  setInterval(() => {
+    if (document.visibilityState !== 'hidden') saveReportFormBackup();
+  }, 30000);
   await hydrateFromDraft();
 }
 

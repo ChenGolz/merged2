@@ -47,6 +47,8 @@ async function runSearchPage() {
   window.mountLanguageSwitcher?.();
   window.registerServiceWorker?.();
   window.flushQueuedBackgroundReports?.().catch(() => {});
+  window.ensureSearchModelAssets?.().catch(() => {});
+  window.prewarmAnimalModels?.().catch(() => {});
 
   const statusEl = document.getElementById('status');
   const searchForm = document.getElementById('search-form');
@@ -55,6 +57,7 @@ async function runSearchPage() {
   const runSelectedBtn = document.getElementById('run-selected-btn');
   const smartScanBtn = document.getElementById('smart-scan-btn');
   const useWholeBtn = document.getElementById('use-whole-btn');
+  const clearSelectionBtn = document.getElementById('clear-selection-btn');
   const canvas = document.getElementById('preview-canvas');
   const cropImg = document.getElementById('query-crop');
   const cropMetaEl = document.getElementById('crop-meta');
@@ -869,8 +872,10 @@ function rerenderResults() {
     }
   }
 
-  await loadModels(statusEl);
-  await loadAnimalDetector(statusEl).catch((error) => { console.warn('animal detector unavailable', error); updateDetectionStatus('הסריקה החכמה לא נטענה עדיין. אפשר להמשיך גם בלי זה.', 'warn'); });
+  const modelWarmup = loadModels(statusEl);
+  const detectorWarmup = loadAnimalDetector(statusEl).catch((error) => { console.warn('animal detector unavailable', error); updateDetectionStatus('הסריקה החכמה לא נטענה עדיין. אפשר להמשיך גם בלי זה.', 'warn'); });
+  await modelWarmup;
+  await detectorWarmup;
   currentLibrary = await getMergedLibrary();
   libraryStatsEl.textContent = formatEntryCount(currentLibrary.length);
   resetSearchProgress();
@@ -936,6 +941,15 @@ function rerenderResults() {
   useWholeBtn.addEventListener('click', () => {
     if (!currentPreviewImage) return;
     setSelection(fullImageRect(currentPreviewImage), 'נבחרה כל התמונה. אם יש גם אנשים בפריים, עדיף לסמן רק את החיה.');
+  });
+
+  clearSelectionBtn?.addEventListener('click', () => {
+    if (!currentPreviewImage) return;
+    currentSelection = defaultSelectionRect(currentPreviewImage);
+    redrawPreview();
+    updateSelectionPreview();
+    selectionHintEl.textContent = 'הבחירה אופסה. אפשר לגרור מחדש, ללחוץ על סריקה חכמה או להשתמש בכל התמונה.';
+    setStatus(statusEl, 'אזור הבחירה אופס. אפשר לבחור מחדש או להפעיל סריקה חכמה.', { tone: 'success' });
   });
 
   locateBtn.addEventListener('click', async () => {

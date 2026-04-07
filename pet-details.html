@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="css/main.css?v=2026-04-07-realpass-1"/>
+<link rel="stylesheet" href="css/main.css?v=2026-04-08-polish-1"/>
 <link rel="icon" type="image/png" href="assets/img/logo.png"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="he_IL"/>
@@ -25,7 +25,7 @@
 <div id="siteFooterMount"></div>
 <script defer src="assets/js/layout-inject.js?v=2026-04-07-v1"></script>
 <script defer src="assets/js/site.js?v=2026-04-07-v1"></script>
-<script defer src="petconnect-assets/common.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/common.js?v=20260408v1"></script>
 <script>
 window.addEventListener('DOMContentLoaded', async () => {
   window.bootUiShell?.(document);
@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const detailUrl = new URL(window.buildPetDetailsHref?.(record) || window.location.href, window.location.href).href;
   const share = window.buildWhatsAppShare?.(record, { url: detailUrl }) || { href: '#', text: '' };
   document.title = `KBWG | ${record.name || record.animalType || 'פרטי מודעה'}`;
-  const image = record.imageData ? `<img src="${record.imageData}" alt="${esc(record.name || record.animalType || 'חיה')}" loading="eager" decoding="async">` : '<div class="pet-detail-empty-media">אין תמונה זמינה</div>';
+  const image = record.imageData ? `<img src="${record.imageData}" alt="${esc(record.name || record.animalType || 'חיה')}" loading="eager" decoding="async">` : `<div class="pet-detail-empty-media"><div class="pet-placeholder-emoji" aria-hidden="true">🐾</div><strong>עדיין אין תמונה זמינה</strong><div class="small">גם בלי תמונה, כל פרט קטן יכול לעזור לזהות ולשתף נכון.</div></div>`;
   shell.innerHTML = `
     <section class="pet-detail-hero">
       <div class="pet-detail-media">${image}</div>

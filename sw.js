@@ -1,5 +1,5 @@
-const STATIC_CACHE = 'kbwg-petfinder-static-v3';
-const RUNTIME_CACHE = 'kbwg-petfinder-runtime-v3';
+const STATIC_CACHE = 'kbwg-petfinder-static-v4';
+const RUNTIME_CACHE = 'kbwg-petfinder-runtime-v4';
 const SYNC_DB_NAME = 'petconnect-sync-db';
 const SYNC_STORE = 'pending-json-posts';
 const RUNTIME_HOSTS = new Set([
@@ -37,6 +37,9 @@ const PRECACHE_URLS = [
   './enroll.inline.js',
   './data/library.json',
   'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
+  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/tf-backend-wasm.min.js',
+  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/tfjs-backend-wasm.wasm',
+  'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/tfjs-backend-wasm-simd.wasm',
   'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
   'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js',
 ];

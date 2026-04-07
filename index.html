@@ -15,10 +15,10 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="petconnect-assets/styles.scoped.css?v=2026-04-07-v1" rel="stylesheet"/>
-<link href="css/main.css?v=2026-04-07-realpass-1" rel="stylesheet"/>
+<link href="css/main.css?v=2026-04-08-polish-1" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <link href="manifest.webmanifest?v=2026-04-06-v3" rel="manifest"/>
-<meta content="#0d4f63" name="theme-color"/>
+<meta content="#ffffff" name="theme-color"/>
 </head>
 <body class="petconnect-kbwg-page">
 <div id="siteHeaderMount"></div>
@@ -27,7 +27,7 @@
 
 <input accept="image/*" capture="environment" class="camera-direct-input" id="home-camera-input" type="file"/>
 <section class="hero product-hero heroSmall bundleHero petfinder-master-hero home-hero-clean">
-  <img loading="eager" decoding="async" class="decorPhoto decorCL" src="assets/img/photos/home-hero-pets.svg" alt="" aria-hidden="true" />
+  <img loading="eager" fetchpriority="high" decoding="async" width="960" height="960" class="decorPhoto decorCL" src="assets/img/photos/home-hero-pets.svg" alt="" aria-hidden="true" />
   <div class="wrap heroInner">
     <div class="heroCopy center-text">
       <h1>מחזירים אותם הביתה. ביחד.</h1>
@@ -115,7 +115,7 @@
     <a class="button-link lost" href="./search.html?mode=lost">איבדתי חיה</a>
     <a class="button-link found" href="./report-found.html">דיווח חיה שנמצאה</a>
   </div>
-  <button aria-label="פעולות מהירות" class="fab-main" id="home-fab-toggle" type="button">+</button>
+  <button aria-label="פעולות מהירות" aria-controls="home-fab-sheet" aria-expanded="false" class="fab-main" id="home-fab-toggle" type="button">+</button>
 </div>
 
 <section class="card stack section-shell" style="margin-top:18px;">
@@ -160,7 +160,7 @@
 <script defer src="petconnect-assets/global.js?v=20260407v1"></script>
 <script defer src="petconnect-assets/init.js?v=20260407v1"></script>
 <script defer src="petconnect-assets/i18n.js?v=20260407v1"></script>
-<script defer src="petconnect-assets/common.js?v=20260407v1"></script>
+<script defer src="petconnect-assets/common.js?v=20260408v1"></script>
 <script defer src="petconnect-assets/app.js?v=20260407v1"></script>
 <script>
 window.addEventListener('DOMContentLoaded', async () => {
@@ -179,6 +179,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     else setTimeout(prefetch, 900);
   };
   warmSearchModels();
+  window.ensureSearchModelAssets?.().catch(() => {});
+  window.prewarmAnimalModels?.().catch(() => {});
 
   const grid = document.getElementById('home-latest-pets-grid');
   const ticker = document.getElementById('reunion-ticker-track');
@@ -271,7 +273,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const fabToggle = document.getElementById('home-fab-toggle');
   const fabSheet = document.getElementById('home-fab-sheet');
-  fabToggle?.addEventListener('click', () => fabSheet?.classList.toggle('hidden'));
+  fabToggle?.addEventListener('click', () => {
+    const nextHidden = !fabSheet?.classList.contains('hidden');
+    fabSheet?.classList.toggle('hidden');
+    fabToggle.setAttribute('aria-expanded', String(nextHidden));
+  });
 });
 </script>
 </body>
