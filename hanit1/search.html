@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>חיפוש מהיר לפי תמונה · פאטקונקט</title>
+    <link rel="stylesheet" href="./assets/styles.css?v=20260403v48">
+    <link rel="manifest" href="./manifest.webmanifest?v=20260403v48">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#111831">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./icon-192.png">
+    <meta property="og:title" content="פאטקונקט · חיפוש חיה לפי תמונה">
+    <meta property="og:description" content="מעלים תמונה, מחפשים התאמות, ואם צריך ממשיכים ישר לדיווח — בלי להעלות שוב.">
+    <meta property="og:image" content="./favicon.svg">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+    <script defer src="./assets/global.js?v=20260403v48"></script>
+    <script defer src="./assets/init.js?v=20260403v48"></script>
+    <script defer src="./assets/i18n.js?v=20260403v48"></script>
+    <script defer src="./assets/common.js?v=20260403v48"></script>
+    <script defer src="./assets/app.js?v=20260403v48"></script>
+    <script defer src="./search.inline.js?v=20260403v48"></script>
+  </head>
+  <body>
+    <main class="page unified-page">
+      <nav class="nav nav-glass header-modern compact-nav">
+        <div class="brand-block"><strong>פאטקונקט</strong><span class="brand-subtitle">איתור והצלה</span></div>
+        <div class="nav-actions compact-nav-actions">
+          <div class="lang-switcher compact-lang-switcher" aria-label="בחירת שפה">
+            <span class="lang-globe" aria-hidden="true">🌐</span>
+            <select class="lang-picker" data-lang-select aria-label="בחירת שפה">
+              <option value="he">עברית</option>
+              <option value="en">English</option>
+              <option value="ar">العربية</option>
+            </select>
+          </div>
+        </div>
+        <div class="links compact-links">
+          <a class="link" href="./index.html">⌂</a><a class="link" href="./search.html?mode=lost">⌕</a><a class="link" href="./report-found.html?kind=found">＋</a>
+</div>
+      </nav>
+
+      <section class="card hero-slab stack section-shell hero-shell">
+        <div class="chip">חיפוש ציבורי</div>
+        <h1 style="margin:0;">חיפוש חיה לפי תמונה</h1>
+        <p class="meta">מעלות תמונה, ממקדות את אזור החיה, ומקבלות תוצאות מיד. אם אין התאמה חזקה, אפשר להפוך את אותה תמונה לדיווח בלי להעלות שוב.</p>
+        <div id="status" class="notice">טוען…</div>
+        <form id="search-form" class="stack" novalidate>
+          <div class="field-grid">
+            <div class="stack" style="gap:8px;">
+              <input id="query-file" type="file" accept="image/*" capture="environment" required aria-label="בחירת תמונת חיה">
+              <div class="tip-bubble small"><strong>טיפ לצילום:</strong> נסי לצלם מגובה החיה, באור יום, וכמה שפחות רקע מסביב — זה משפר גם את החיפוש המיידי וגם את הדיווח.</div>
+            </div>
+            <div class="stack" style="gap:8px;">
+              <div class="inline-meter">
+                <label for="min-score">סף התאמה מינימלי</label>
+                <output id="min-score-value" for="min-score">55%</output>
+              </div>
+              <input id="min-score" type="range" min="35" max="90" step="1" value="55" aria-label="סף התאמה מינימלי">
+            </div>
+          </div>
+          <div class="field-grid">
+            <input id="city-name" type="text" autocomplete="address-level2" placeholder="עיר לדיווח 106, למשל תל אביב-יפו" aria-label="שם העיר לדיווח">
+            <div class="row">
+              <button id="locate-btn" class="secondary" type="button">שימוש במיקום הנוכחי</button>
+              <div id="location-status" class="location-pill">המיקום יופיע כאן לאחר בחירה.</div>
+            </div>
+          </div>
+          <div class="field-grid">
+            <input id="location-text" type="text" class="readonly-input" placeholder="כתובת / אזור משוער יופיעו כאן אוטומטית" aria-label="כתובת משוערת" readonly>
+            <input id="reported-at" type="text" class="readonly-input" placeholder="זמן הדיווח יתמלא אוטומטית" aria-label="זמן הדיווח האוטומטי" readonly>
+          </div>
+          <div class="field-grid">
+            <label class="stack small" style="gap:6px;">
+              <span>רדיוס חיפוש משוער (ק"מ)</span>
+              <input id="search-radius" type="range" min="1" max="10" step="1" value="2" aria-label="רדיוס חיפוש משוער">
+            </label>
+            <div id="search-radius-note" class="notice">הרדיוס כרגע משמש לשיתופים, לדיווח 106 ולחיווי חיפוש. כשהפרויקט יעבור לשרת+מפה, אותו ערך יוכל לצייר גם מעגל על Leaflet.</div>
+          </div>
+          <div class="field-grid">
+            <div id="connection-note" class="notice">האתר יתאים אוטומטית את דחיסת התמונה למהירות הרשת.</div>
+            <div class="row wrap compact-row">
+              <label class="small checkbox-inline"><input id="low-data-toggle" type="checkbox"> מצב חסכוני לגלישה חלשה</label>
+              <button id="alert-optin-btn" class="secondary small" type="button">הפעלת התראות שכונתיות</button>
+            </div>
+          </div>
+          <div class="field-grid">
+            <input id="query-animal-type" type="text" placeholder="סוג חיה, למשל כלב / חתול" aria-label="סוג החיה לחיפוש">
+            <input id="breed-name" type="text" placeholder="גזע משוער, למשל לברדור" aria-label="גזע משוער">
+          </div>
+          <div id="breed-suggestion-chips" class="suggestion-chips"></div>
+          <div class="row wrap compact-row">
+            <button id="search-btn" class="lost" type="submit">חיפוש בעלים</button>
+            <button id="report-direct-btn" class="found" type="button">דיווח מהיר</button>
+          </div>
+        </form>
+        <div id="library-stats" class="small"></div>
+        <div class="hero-mini-steps"><span class="badge">1 העלאת תמונה</span><span class="badge">2 מיקוד החיה</span><span class="badge">3 תוצאות או דיווח</span></div>
+        <div id="prep-note" class="small"></div>
+        <div id="search-progress" class="progress-block">
+          <div class="progress-head">
+            <strong>מצב סריקה</strong>
+            <span id="search-progress-label" class="small">ממתין לתמונה לחיפוש.</span>
+          </div>
+          <div class="progress-track" aria-hidden="true"><div id="search-progress-fill" class="progress-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div>
+        </div>
+      </section>
+
+      <section class="grid grid-2 section-grid" style="margin-top:16px;">
+        <article id="preview-card" class="card stack section-shell preview-card">
+          <div class="space-between">
+            <div class="section-head"><div class="section-kicker">בחירה מדויקת</div><h2 class="section-title" style="margin:0;">סימון אזור החיה</h2><div class="section-subtitle">סמני את אזור החיה או תני לסריקה החכמה להתמקד אוטומטית.</div></div>
+            <label class="small" style="display:flex; align-items:center; gap:8px;">
+              <input id="show-box" type="checkbox" checked>
+              להציג מסגרת בחירה
+            </label>
+          </div>
+          <div class="preview-guide-shell">
+            <canvas id="preview-canvas" class="preview"></canvas>
+            <div class="face-guide-overlay" aria-hidden="true">
+              <div class="face-guide-ring"></div>
+              <div class="face-guide-text">מרכזי את פני החיה בתוך העיגול לקבלת תוצאה טובה יותר</div>
+            </div>
+          </div>
+          <div id="selection-hint" class="small">אפשר לגרור מלבן סביב החיה. זה חשוב במיוחד כשיש גם אנשים או רקע עמוס.</div>
+          <div class="row">
+            <button id="smart-scan-btn" class="secondary small" type="button">גזירה אוטומטית של החיה</button>
+            <button id="use-whole-btn" class="secondary small" type="button">שימוש בכל התמונה</button>
+            <button id="run-selected-btn" class="small" type="button" disabled>חיפוש לפי האזור שסומן</button>
+          </div>
+          <div class="row wrap compact-row">
+            <label class="small checkbox-inline"><input id="subject-only-toggle" type="checkbox" checked> מיקוד אוטומטי בחיה</label>
+            <label class="small checkbox-inline"><input id="circle-mask-toggle" type="checkbox" checked> מסכה עגולה לחיפוש</label>
+            <div id="detection-status" class="detection-pill">ממתין לתמונה. סריקה חכמה תנסה לזהות חיה ולהתעלם מאנשים.</div>
+          </div>
+        </article>
+        <article class="card stack section-shell">
+          <div class="section-head"><div class="section-kicker">תצוגה מקדימה</div><h2 class="section-title">האזור שנשלח לחיפוש</h2><div class="section-subtitle">כך נראה האזור שבאמת נשלח לאלגוריתם, כדי להימנע מרקע ואנשים.</div></div>
+          <img id="query-crop" class="hidden" alt="האזור שנבחר לחיפוש">
+          <div id="crop-meta" class="small">עדיין לא נבחר אזור חיה.</div>
+          <div class="notice warn">כדי לזהות חיה מתוך תמונה עם אדם, אפשר לתת לסריקה החכמה להתמקד אוטומטית בחיה. אם אין התאמה חזקה, יוצגו גם חיות עם צבעים דומים.</div>
+          <div id="ai-crop-note" class="small">✅ אפשר לנסות גזירה אוטומטית: המערכת תנסה להתמקד בחיה לבד. אם הזיהוי לא בטוח, תמיד אפשר לתקן ידנית.</div>
+          <div id="privacy-note" class="small privacy-note">אם תשתמשי במיקום, בשיתופים ובטיוטת 106 יופיע אזור משוער בלבד כדי לשמור על פרטיות.</div>
+          <div id="smart-hint" class="small">אם אינך בטוחה בגזע, השאירי את השדה ריק. אחרי הסריקה נציע גזעים נפוצים לפי סוג החיה ולפי התוצאות המובילות.</div>
+        </article>
+      </section>
+
+      <section class="card stack section-shell section-shell--minimal" style="margin-top:16px;">
+        <details class="soft-disclosure">
+          <summary>הוספת קטלוג נוסף לחיפוש</summary>
+          <div class="soft-disclosure-body stack" style="margin-top:12px;">
+            <div class="small">אפשר לצרף קטלוג נוסף באופן זמני כדי להרחיב את החיפוש.</div>
+            <div class="row wrap compact-row">
+              <input id="import-json" type="file" accept="application/json,.json">
+              <button id="clear-imported" class="secondary small" type="button">ניקוי המיובא</button>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section id="results-section" class="card stack section-shell" style="margin-top:16px;">
+        <div class="space-between">
+          <div class="section-head"><div class="section-kicker">Results</div><h2 class="section-title" style="margin:0;">תוצאות החיפוש</h2><div class="section-subtitle">שלוש תוצאות אפשריות: התאמה חזקה, מועמדים דומים, או המלצה לצילום נוסף.</div></div>
+          <div class="small">מעל 90% תוצג התאמה חזקה, בין 60% ל-90% תוצג גלריית מועמדים, ומתחת לזה תקבלי המלצה לנסות עוד תמונה. הציון מבוסס על שילוב של מבנה/הטמעה, צבע פרווה וגזע.</div>
+        </div>
+        <div class="filter-bar">
+          <label class="stack small" style="gap:6px;">
+            <span>סינון לפי סוג</span>
+            <select id="filter-animal-type">
+              <option value="">כל הסוגים</option>
+            </select>
+          </label>
+          <label class="stack small" style="gap:6px;">
+            <span>סינון לפי גזע</span>
+            <select id="filter-breed">
+              <option value="">כל הגזעים</option>
+            </select>
+          </label>
+          <label class="stack small" style="gap:6px;">
+            <span>סינון לפי מקור</span>
+            <select id="filter-source">
+              <option value="">כל המקורות</option>
+              <option value="repo">קטלוג ראשי</option>
+              <option value="local">נוסף</option>
+              <option value="imported">מיובא</option>
+            </select>
+          </label>
+          <label class="small checkbox-inline">
+            <input id="filter-strong-only" type="checkbox">
+            רק התאמות חזקות
+          </label>
+          <div class="summary-actions" style="margin-inline-start:auto;">
+            <button id="share-top-btn" class="small" type="button" disabled>שיתוף התוצאה המובילה</button>
+            <button id="whatsapp-top-btn" class="secondary small" type="button" disabled>שליחה בוואטסאפ</button>
+            <button id="community-top-btn" class="secondary small" type="button" disabled>הודעת שכונה</button>
+            <button id="poster-top-btn" class="secondary small" type="button" disabled>פלייר PNG</button>
+            <button id="print-poster-top-btn" class="secondary small" type="button" disabled>פוסטר להדפסה</button>
+            <a id="report-top-btn" class="button-link secondary small" href="mailto:?subject=%D7%93%D7%99%D7%95%D7%95%D7%97%20%D7%9C%D7%9E%D7%95%D7%A7%D7%93%20106">טיוטת 106</a>
+          </div>
+        </div>
+        <div id="breed-quick-filters" class="suggestion-chips"></div>
+        <div id="summary" class="hidden"></div>
+        <div id="report-cta-container" class="hidden"></div>
+        <div id="match-results-container" class="empty empty-state" aria-live="polite">התוצאות שלך יופיעו כאן.</div>
+      </section>
+
+      <div id="sticky-report-bar" class="sticky-report-bar hidden">
+        <div class="row wrap compact-row">
+          <div class="stack" style="gap:6px;">
+            <strong>לא נמצאה התאמה?</strong>
+            <div class="small">הפכי את התמונה שכבר חיפשת לדיווח על חיה שנמצאה — בלי להעלות שוב.</div>
+          </div>
+          <div class="row wrap compact-row">
+            <button id="sticky-report-btn" class="found small" type="button">יצירת דיווח</button>
+            <button id="sticky-quick-btn" class="secondary small" type="button">דיווח מהיר</button>
+          </div>
+        </div>
+      </div>
+          <nav class="mobile-bottom-nav" aria-label="ניווט מהיר">
+        <a class="mobile-nav-item" href="./index.html" aria-label="בית"><span class="mobile-nav-icon">🏠</span><span>בית</span></a>
+        <a class="mobile-nav-item active" href="./search.html?mode=lost" aria-label="חיפוש"><span class="mobile-nav-icon">🔍</span><span>חיפוש</span></a>
+        <a class="mobile-nav-item" href="./report-found.html?kind=found" aria-label="דיווח"><span class="mobile-nav-icon">➕</span><span>דיווח</span></a>
+      </nav>
+
+      <dialog id="verification-modal" class="verify-modal">
+        <form method="dialog" class="verify-modal-card stack section-shell section-shell--sub">
+          <div class="space-between">
+            <h2 id="verification-title" class="section-title" style="margin:0;">בדיקת סימן זיהוי</h2>
+            <button class="secondary small" type="submit">סגירה</button>
+          </div>
+          <div id="verification-prompt" class="notice">שאלה פרטית תופיע כאן.</div>
+          <input id="verification-answer" type="text" placeholder="כתבי את התשובה כפי שהבעלים אמור לדעת" aria-label="תשובת סימן הזיהוי">
+          <div class="row">
+            <button id="verification-check-btn" type="button">בדיקת תשובה</button>
+          </div>
+          <div id="verification-result" class="small">האימות נשמר פרטי ומאובטח.</div>
+        </form>
+      </dialog>
+    </main>
+  </body>
+</html>

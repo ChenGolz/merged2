@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>דיווח חיה שנמצאה · פאטקונקט</title>
+    <link rel="stylesheet" href="./assets/styles.css?v=20260403v48">
+    <link rel="manifest" href="./manifest.webmanifest?v=20260403v48">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#111831">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="./icon-192.png">
+    <meta property="og:title" content="פאטקונקט · דיווח מהיר על חיה">
+    <meta property="og:description" content="מסלול דיווח קצר וברור שיעזור לך לפרסם חיה שנמצאה במהירות ולשתף אותה בלחיצה.">
+    <meta property="og:image" content="./favicon.svg">
+    <script defer src="./assets/global.js?v=20260403v48"></script>
+    <script defer src="./assets/init.js?v=20260403v48"></script>
+    <script defer src="./assets/i18n.js?v=20260403v48"></script>
+    <script defer src="./assets/common.js?v=20260403v48"></script>
+    <script defer src="./assets/app.js?v=20260403v48"></script>
+    <script defer src="./report-found.inline.js?v=20260403v48"></script>
+  </head>
+  <body>
+    <main class="page unified-page">
+      <nav class="nav nav-glass header-modern compact-nav">
+        <div class="brand-block"><strong>פאטקונקט</strong><span class="brand-subtitle">איתור והצלה</span></div>
+        <div class="nav-actions compact-nav-actions">
+          <div class="lang-switcher compact-lang-switcher" aria-label="בחירת שפה">
+            <span class="lang-globe" aria-hidden="true">🌐</span>
+            <select class="lang-picker" data-lang-select aria-label="בחירת שפה">
+              <option value="he">עברית</option>
+              <option value="en">English</option>
+              <option value="ar">العربية</option>
+            </select>
+          </div>
+        </div>
+        <div class="links compact-links">
+          <a class="link" href="./index.html">⌂</a><a class="link" href="./search.html?mode=lost">⌕</a><a class="link" href="./report-found.html?kind=found">＋</a>
+</div>
+      </nav>
+
+      <section class="card hero-slab stack section-shell hero-shell">
+        <div id="report-hero-chip" class="chip">Quick Post</div>
+        <h1 id="report-hero-title" style="margin:0;">יצירת דיווח</h1>
+        <p id="report-hero-meta" class="meta">אם הגעת לכאן מתוך החיפוש, התמונה והמיקום כבר מחכים לך כאן. המטרה: לסיים דיווח מהר ובלי לחזור על צעדים.</p>
+        <div class="step-progress">
+          <div id="report-step-1" class="step-pill active">1/3 תמונה</div>
+          <div id="report-step-2" class="step-pill">2/3 מיקום</div>
+          <div id="report-step-3" class="step-pill">3/3 יצירת קשר</div>
+        </div>
+        <div class="hero-mini-steps"><span class="badge">1 תמונה</span><span class="badge">2 מיקום</span><span class="badge">3 טלפון / וואטסאפ</span></div>
+        <div id="report-status" class="notice">טוען טיוטת דיווח…</div>
+      </section>
+
+      <section class="grid grid-2 section-grid" style="margin-top:16px;">
+        <article class="card stack section-shell">
+          <div class="section-head"><div class="section-kicker">שלב 1</div><h2 class="section-title">תצוגה מקדימה</h2><div class="section-subtitle">התמונה שבחרת תלווה את כל תהליך הדיווח.</div></div>
+          <img id="report-image" class="report-preview hidden" alt="תמונת הדיווח">
+          <div id="report-image-empty" class="empty empty-state">עדיין לא נטענה תמונה. אפשר לחזור לחיפוש או לבחור תמונה ידנית למטה.</div>
+          <input id="report-image-file" type="file" accept="image/*" capture="environment">
+          <div class="tip-bubble small"><strong>טיפ לצילום:</strong> אם אפשר, צלמי את החיה מלפנים או מהצד, באור טבעי, והשתדלי שלא לחתוך אוזניים/זנב.</div>
+          <div class="row wrap compact-row">
+            <button id="back-to-search-btn" class="secondary small" type="button">חזרה לחיפוש</button>
+            <button id="clear-draft-btn" class="secondary small" type="button">ניקוי הטיוטה</button>
+          </div>
+        </article>
+        <article class="card stack section-shell">
+          <div class="section-head"><div class="section-kicker">שלב 2-3</div><h2 class="section-title">מיקום ופרטי קשר</h2><div class="section-subtitle">קודם בוחרים מיקום, ואז משאירים רק פרטי קשר קצרים כדי לפרסם במהירות.</div></div>
+          <div class="field-grid">
+            <input id="report-animal-type" type="text" placeholder="סוג חיה, למשל כלב" aria-label="סוג חיה">
+            <input id="report-breed" type="text" placeholder="גזע משוער" aria-label="גזע משוער">
+          </div>
+          <div id="report-breed-chips" class="suggestion-chips"></div>
+          <div class="field-grid">
+            <input id="report-color" type="text" placeholder="צבע מרכזי" aria-label="צבע">
+            <input id="report-size" type="text" placeholder="גודל משוער" aria-label="גודל">
+          </div>
+          <div class="field-grid">
+            <input id="report-city" type="text" placeholder="עיר" aria-label="עיר">
+            <input id="report-location" type="text" placeholder="כתובת או אזור" aria-label="אזור/כתובת">
+          </div>
+          <div class="field-grid">
+            <input id="report-time" class="readonly-input" type="text" readonly aria-label="זמן דיווח">
+            <label class="small checkbox-inline"><input id="quick-post-toggle" type="checkbox" checked> דיווח מהיר: לשאול רק על פרטים נוספים</label>
+          </div>
+          <div class="field-grid">
+            <input id="report-phone" type="tel" inputmode="tel" placeholder="טלפון ליצירת קשר" aria-label="טלפון ליצירת קשר">
+            <label class="small checkbox-inline"><input id="report-whatsapp-optin" type="checkbox" checked> אפשר לפנות גם בוואטסאפ</label>
+          </div>
+          <textarea id="report-extra-details" rows="4" placeholder="פרטים נוספים? למשל: החיה ידידותית / פצועה קל / נראתה ליד גינה ציבורית"></textarea>
+          <div class="card stack section-shell" style="padding:14px;">
+            <div class="space-between"><strong>תיאור קולי מהיר</strong><span class="chip voice-badge">2026 UX</span></div>
+            <div class="small">אפשר להקליט עד כ-10 שניות במקום להקליד תוך כדי תנועה.</div>
+            <div class="voice-tools">
+              <button id="voice-start-btn" class="secondary small" type="button">התחלת הקלטה</button>
+              <button id="voice-stop-btn" class="secondary small" type="button" disabled>עצירת הקלטה</button>
+              <button id="voice-clear-btn" class="secondary small" type="button" disabled>מחיקת הקלטה</button>
+              <span id="voice-status" class="voice-status">עדיין אין הקלטה.</span>
+            </div>
+            <audio id="voice-audio" controls class="hidden"></audio>
+          </div>
+          <div class="row wrap compact-row">
+            <button id="submit-report-btn" type="button">שמירת דיווח</button>
+            <button id="share-report-btn" class="secondary" type="button" disabled>שיתוף</button>
+            <button id="whatsapp-report-btn" class="secondary" type="button" disabled>פוסט לוואטסאפ</button>
+            <button id="poster-report-btn" class="secondary poster-btn" type="button" disabled>יצירת פוסטר</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="report-success" class="card stack section-shell success-shell hidden" style="margin-top:16px;"></section>
+
+      <nav class="mobile-bottom-nav" aria-label="ניווט מהיר">
+        <a class="mobile-nav-item" href="./index.html" aria-label="בית"><span class="mobile-nav-icon">🏠</span><span>בית</span></a>
+        <a class="mobile-nav-item" href="./search.html?mode=lost" aria-label="חיפוש"><span class="mobile-nav-icon">🔍</span><span>חיפוש</span></a>
+        <a class="mobile-nav-item active" href="./report-found.html?kind=found" aria-label="דיווח"><span class="mobile-nav-icon">➕</span><span>דיווח</span></a>
+      </nav>
+
+      <section class="card stack section-shell section-shell--minimal" style="margin-top:16px;">
+        <details class="soft-disclosure">
+          <summary>הדיווחים האחרונים שלך</summary>
+          <div class="soft-disclosure-body stack" style="margin-top:12px;">
+            <div class="small">כאן אפשר לחזור לדיווחים האחרונים שיצרת במהירות.</div>
+            <div id="local-found-reports" class="result-grid"></div>
+          </div>
+        </details>
+      </section>
+    </main>
+
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('fromSearch') === 'true') {
+          const savedImage = sessionStorage.getItem('pendingFoundImage') || sessionStorage.getItem('pendingImage') || '';
+          if (savedImage) {
+            window.currentReportImage = savedImage;
+            const previewImg = document.getElementById('report-image');
+            const emptyState = document.getElementById('report-image-empty');
+            if (previewImg) {
+              previewImg.src = savedImage;
+              previewImg.classList.remove('hidden');
+            }
+            emptyState?.classList.add('hidden');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
