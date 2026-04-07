@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+<title id="title">כלב וחתול מביטים קדימה</title>
+<desc id="desc">איור רך של כלב וחתול בסגנון נקי עבור דף הבית.</desc>
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#f8fbfd"/><stop offset="100%" stop-color="#eef4f1"/></linearGradient></defs>
+<rect width="1200" height="820" fill="url(#bg)" rx="42"/>
+<circle cx="310" cy="410" r="190" fill="#d7c0a0"/><circle cx="890" cy="395" r="165" fill="#c3c8cf"/>
+<ellipse cx="310" cy="565" rx="210" ry="75" fill="#d9e4e0" opacity=".8"/><ellipse cx="890" cy="560" rx="190" ry="60" fill="#d9e4e0" opacity=".8"/>
+<circle cx="250" cy="330" r="68" fill="#b88856"/><circle cx="370" cy="330" r="68" fill="#b88856"/><circle cx="310" cy="405" r="170" fill="#d9b185"/>
+<ellipse cx="310" cy="445" rx="86" ry="74" fill="#efe6dc"/><ellipse cx="310" cy="490" rx="42" ry="28" fill="#4d3b35"/>
+<circle cx="260" cy="390" r="15" fill="#1f1f1f"/><circle cx="360" cy="390" r="15" fill="#1f1f1f"/><circle cx="255" cy="385" r="5" fill="#fff"/><circle cx="355" cy="385" r="5" fill="#fff"/>
+<path d="M250 525 Q310 555 370 525" fill="none" stroke="#7b5a4a" stroke-width="10" stroke-linecap="round"/>
+<path d="M770 260 L825 170 L850 275 Z" fill="#9ea6ae"/><path d="M930 275 L955 170 L1010 260 Z" fill="#9ea6ae"/><circle cx="890" cy="390" r="155" fill="#bcc2c9"/>
+<ellipse cx="890" cy="430" rx="82" ry="70" fill="#f3f4f6"/><circle cx="845" cy="385" r="13" fill="#1f1f1f"/><circle cx="935" cy="385" r="13" fill="#1f1f1f"/>
+<circle cx="840" cy="380" r="4" fill="#fff"/><circle cx="930" cy="380" r="4" fill="#fff"/><polygon points="890,425 868,452 912,452" fill="#d89ca1"/>
+<path d="M860 458 Q890 474 920 458" fill="none" stroke="#6d747c" stroke-width="8" stroke-linecap="round"/>
+<g stroke="#7d858d" stroke-width="5" stroke-linecap="round" opacity=".9"><path d="M815 435 H860"/><path d="M820 455 H860"/><path d="M920 435 H965"/><path d="M920 455 H970"/></g></svg>
