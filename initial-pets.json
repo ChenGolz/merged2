@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "id": "pet-demo-1",
+      "name": "ברונו",
+      "animalType": "כלב",
+      "breed": "מעורב",
+      "city": "תל אביב",
+      "locationText": "אזור כיכר המדינה",
+      "colors": "חום לבן",
+      "notes": "חברותי אך מעט חושש. נראה לאחרונה סמוך לגינה הציבורית.",
+      "status": "lost",
+      "isAdminVerified": false
+    },
+    {
+      "id": "pet-demo-2",
+      "name": "מיקה",
+      "animalType": "חתולה",
+      "breed": "אירופאית",
+      "city": "חולון",
+      "locationText": "ליד בית הספר השכונתי",
+      "colors": "אפור לבן",
+      "notes": "עונדת קולר ירוק ונוטה להתחבא ליד רכבים חונים.",
+      "status": "lost",
+      "isAdminVerified": false
+    },
+    {
+      "id": "pet-demo-3",
+      "name": "לונה",
+      "animalType": "כלבה",
+      "breed": "מעורבת",
+      "city": "ירושלים",
+      "locationText": "רחוב הגינה",
+      "colors": "שחור חום",
+      "notes": "מגיבה טוב לקול שקט ולמים. נצפתה ליד מקורות צל.",
+      "status": "found",
+      "isAdminVerified": false
+    }
+  ]
+}

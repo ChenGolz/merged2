@@ -810,7 +810,54 @@ function setStatus(element, text, options = {}) {
   if (busy) element.classList.add('busy');
 }
 
+
+const MODEL_SCRIPT_URLS = {
+  tf: 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js',
+  mobilenet: 'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
+  cocoSsd: 'https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js',
+};
+
+function loadExternalScriptOnce(src) {
+  if (!src) return Promise.reject(new Error('Missing script src'));
+  window.__petconnectScriptPromises = window.__petconnectScriptPromises || {};
+  if (window.__petconnectScriptPromises[src]) return window.__petconnectScriptPromises[src];
+  const existing = Array.from(document.scripts || []).find((script) => script.src === src);
+  window.__petconnectScriptPromises[src] = new Promise((resolve, reject) => {
+    const onReady = () => resolve(true);
+    const onError = () => reject(new Error(`Failed to load ${src}`));
+    if (existing) {
+      if (existing.dataset.loaded === 'true') return resolve(true);
+      existing.addEventListener('load', onReady, { once: true });
+      existing.addEventListener('error', onError, { once: true });
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = src;
+    script.defer = true;
+    script.crossOrigin = 'anonymous';
+    script.addEventListener('load', () => {
+      script.dataset.loaded = 'true';
+      resolve(true);
+    }, { once: true });
+    script.addEventListener('error', onError, { once: true });
+    document.head.appendChild(script);
+  });
+  return window.__petconnectScriptPromises[src];
+}
+
+async function ensureModelLibraries(statusEl) {
+  const needsTf = !window.tf;
+  const needsMobilenet = !window.mobilenet;
+  const needsCoco = !window.cocoSsd;
+  if (!needsTf && !needsMobilenet && !needsCoco) return;
+  setStatus(statusEl, 'טוען ספריות זיהוי…', { busy: true });
+  if (needsTf) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.tf);
+  if (needsMobilenet) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.mobilenet);
+  if (needsCoco) await loadExternalScriptOnce(MODEL_SCRIPT_URLS.cocoSsd);
+}
+
 async function loadModels(statusEl) {
+  await ensureModelLibraries(statusEl);
   if (!window.tf || !window.mobilenet) {
     throw new Error('ספריות TensorFlow.js או MobileNet לא נטענו. בדקי חיבור אינטרנט או חסימת CDN.');
   }
@@ -824,6 +871,7 @@ async function loadModels(statusEl) {
   setStatus(statusEl, 'מודל החיפוש של בעלי החיים מוכן.', { tone: 'success' });
 }
 async function loadAnimalDetector(statusEl) {
+  await ensureModelLibraries(statusEl);
   if (!window.cocoSsd) {
     throw new Error('ספריית הזיהוי coco-ssd לא נטענה. בדקי חיבור אינטרנט או חסימת CDN.');
   }
